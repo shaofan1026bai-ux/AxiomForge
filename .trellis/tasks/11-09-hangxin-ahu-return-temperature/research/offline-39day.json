@@ -1,0 +1,52 @@
+{
+  "range": "2026-10-01—2026-11-08 · 全天 · 39个窗口／936小时 · 最后结束2026-11-09 00:00 · 北京时间",
+  "matched": "5台×2类口径的样本数与5项统计全部一致",
+  "elapsed_seconds": 2.8,
+  "devices": [
+    {
+      "device": "AHU1",
+      "all_count": 27837,
+      "running_count": 19803,
+      "running_mean": 24.86024339746503,
+      "missing_days": []
+    },
+    {
+      "device": "AHU2",
+      "all_count": 28073,
+      "running_count": 12757,
+      "running_mean": 24.539836952261503,
+      "missing_days": []
+    },
+    {
+      "device": "AHU3",
+      "all_count": 28075,
+      "running_count": 18456,
+      "running_mean": 28.15280125704378,
+      "missing_days": []
+    },
+    {
+      "device": "AHU4",
+      "all_count": 28070,
+      "running_count": 17734,
+      "running_mean": 22.98661328521484,
+      "missing_days": []
+    },
+    {
+      "device": "AHU5",
+      "all_count": 20153,
+      "running_count": 11643,
+      "running_mean": 25.192965730481834,
+      "missing_days": [
+        "2026-10-28",
+        "2026-10-29",
+        "2026-10-30",
+        "2026-10-31",
+        "2026-11-01",
+        "2026-11-02",
+        "2026-11-03",
+        "2026-11-04",
+        "2026-11-05"
+      ]
+    }
+  ]
+}

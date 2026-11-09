@@ -1,0 +1,67 @@
+{
+  "scope": "2026-10-01—2026-11-08 · 全天 · 39个窗口／936小时 · 最后结束2026-11-09 00:00 · 北京时间",
+  "elapsed_seconds": 84.09,
+  "window_count": 39,
+  "devices": [
+    {
+      "device": "AHU1",
+      "all_count": 27837,
+      "running_count": 19803,
+      "all_minimum": 17.3,
+      "all_maximum": 28.8,
+      "running_minimum": 21.8,
+      "running_maximum": 28.8,
+      "running_p05": 23.5,
+      "running_p95": 26.5,
+      "running_mean": 24.86024339746503
+    },
+    {
+      "device": "AHU2",
+      "all_count": 28073,
+      "running_count": 12757,
+      "all_minimum": 18.7,
+      "all_maximum": 28.6,
+      "running_minimum": 22.1,
+      "running_maximum": 28.6,
+      "running_p05": 23.0,
+      "running_p95": 26.7,
+      "running_mean": 24.539836952261503
+    },
+    {
+      "device": "AHU3",
+      "all_count": 28075,
+      "running_count": 18456,
+      "all_minimum": 24.7,
+      "all_maximum": 31.1,
+      "running_minimum": 25.0,
+      "running_maximum": 31.1,
+      "running_p05": 26.3,
+      "running_p95": 29.5,
+      "running_mean": 28.15280125704378
+    },
+    {
+      "device": "AHU4",
+      "all_count": 28070,
+      "running_count": 17734,
+      "all_minimum": 18.0,
+      "all_maximum": 27.4,
+      "running_minimum": 20.4,
+      "running_maximum": 27.4,
+      "running_p05": 21.1,
+      "running_p95": 25.9,
+      "running_mean": 22.98661328521484
+    },
+    {
+      "device": "AHU5",
+      "all_count": 20153,
+      "running_count": 11643,
+      "all_minimum": 18.1,
+      "all_maximum": 28.1,
+      "running_minimum": 23.5,
+      "running_maximum": 28.1,
+      "running_p05": 24.1,
+      "running_p95": 26.8,
+      "running_mean": 25.192965730481834
+    }
+  ]
+}

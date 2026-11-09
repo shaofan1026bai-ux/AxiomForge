@@ -1,0 +1,95 @@
+[
+  {
+    "window": "2026-10-01—2026-11-08 · 每天14:00—18:00 · 39个窗口／156小时 · 最后结束2026-11-08 18:00 · 北京时间",
+    "matched_independent_timestamp_filter": true,
+    "devices": [
+      {
+        "device": "AHU1",
+        "all": 4680,
+        "running": 4680
+      },
+      {
+        "device": "AHU2",
+        "all": 4680,
+        "running": 4628
+      },
+      {
+        "device": "AHU3",
+        "all": 4680,
+        "running": 4672
+      },
+      {
+        "device": "AHU4",
+        "all": 4676,
+        "running": 4674
+      },
+      {
+        "device": "AHU5",
+        "all": 3357,
+        "running": 3236
+      }
+    ]
+  },
+  {
+    "window": "2026-10-01—2026-10-03 · 每天22:00—次日06:00 · 3个窗口／24小时 · 最后结束2026-10-04 06:00 · 北京时间",
+    "matched_independent_timestamp_filter": true,
+    "devices": [
+      {
+        "device": "AHU1",
+        "all": 720,
+        "running": 225
+      },
+      {
+        "device": "AHU2",
+        "all": 720,
+        "running": 0
+      },
+      {
+        "device": "AHU3",
+        "all": 720,
+        "running": 93
+      },
+      {
+        "device": "AHU4",
+        "all": 720,
+        "running": 90
+      },
+      {
+        "device": "AHU5",
+        "all": 720,
+        "running": 180
+      }
+    ]
+  },
+  {
+    "window": "2026-10-18—2026-10-20 · 每天23:59—次日00:01 · 3个窗口／0.1小时 · 最后结束2026-10-21 00:01 · 北京时间",
+    "matched_independent_timestamp_filter": true,
+    "devices": [
+      {
+        "device": "AHU1",
+        "all": 3,
+        "running": 0
+      },
+      {
+        "device": "AHU2",
+        "all": 3,
+        "running": 0
+      },
+      {
+        "device": "AHU3",
+        "all": 3,
+        "running": 0
+      },
+      {
+        "device": "AHU4",
+        "all": 3,
+        "running": 0
+      },
+      {
+        "device": "AHU5",
+        "all": 3,
+        "running": 0
+      }
+    ]
+  }
+]
