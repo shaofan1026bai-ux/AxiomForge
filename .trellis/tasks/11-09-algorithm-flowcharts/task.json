@@ -1,0 +1,30 @@
+{
+  "id": "algorithm-flowcharts",
+  "name": "algorithm-flowcharts",
+  "title": "算法流程图模块设计",
+  "description": "在算法与规则模块按项目管理Mermaid流程图，支持编辑预览、版本保存和SVG导出，首个样例为航信AHU运行策略。",
+  "status": "in_progress",
+  "dev_type": "fullstack",
+  "scope": "algorithm-flowcharts",
+  "package": null,
+  "priority": "P2",
+  "creator": "shaofan",
+  "assignee": "shaofan",
+  "createdAt": "2026-11-09",
+  "completedAt": null,
+  "branch": null,
+  "base_branch": "main",
+  "worktree_path": null,
+  "commit": null,
+  "pr_url": null,
+  "subtasks": [],
+  "children": [],
+  "parent": null,
+  "relatedFiles": [
+    "src/axiomforge/ui/workbench.py",
+    "docs/architecture/workbench.md",
+    "docs/architecture/workbench-ui.md"
+  ],
+  "notes": "2026-11-09用户批准详细方案并要求实现。领域/存储与UI分工实现，父代理负责文档和浏览器验收。",
+  "meta": {}
+}

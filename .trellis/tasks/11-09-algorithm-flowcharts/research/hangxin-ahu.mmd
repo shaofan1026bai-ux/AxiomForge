@@ -1,0 +1,14 @@
+flowchart TD
+    T{"当前是否处于设定的夜间时间范围？"}
+    T -->|是| N["关闭所有AHU及新风阀"]
+    T -->|否| A{"有人或处于航班保障／预冷时段？"}
+    A -->|否| B["关闭对应AHU及新风阀"]
+    A -->|是| C{"回风温度 ≥ 温度设定值？"}
+    C -->|否| B
+    C -->|是| E["对应AHU运行"]
+    E --> F{"冷水机组是否运行？"}
+    F -->|是| G["关闭新风阀"]
+    F -->|否| H["打开新风阀"]
+
+    classDef configurable fill:#FFF0CC,stroke:#D97706,stroke-width:3px,color:#92400E;
+    class T,C configurable;

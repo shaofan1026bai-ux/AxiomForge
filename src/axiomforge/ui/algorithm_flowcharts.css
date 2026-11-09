@@ -1,0 +1,50 @@
+/* 流程图复用工作台语义色，画布变换不修改算法源码。 */
+.flow-workspace { display:grid; grid-template-columns:184px minmax(0,1fr); gap:18px; width:100%; margin-top:22px; align-items:start; }
+.flow-catalog { min-width:0; padding:16px 12px; border:1px solid var(--line); border-radius:7px; background:var(--surface); }
+.flow-section-label { color:var(--ink); font-size:13px; font-weight:650; }
+.flow-catalog .primary-btn { margin:8px 0 12px; }
+.flow-catalog-item { width:100%; text-align:left; justify-content:flex-start; color:var(--ink)!important; border-radius:5px; }
+.flow-catalog-item .q-btn__content { white-space:normal; overflow-wrap:anywhere; text-align:left; }
+.flow-catalog-item.active { background:var(--selected); color:var(--selected-text)!important; }
+.flow-version-note { color:var(--muted); font-size:11px; line-height:1.7; }
+.flow-catalog > .flow-version-note { margin:-6px 12px 12px; }
+.flow-document { min-width:0; }
+.flow-header-actions { align-items:center; gap:8px; flex-wrap:wrap; }
+.flow-version-select { width:145px; }
+.flow-tabs { margin:14px 0; border-bottom:1px solid var(--line); color:var(--muted); }
+.flow-tabs .q-tab--active { color:var(--accent); }
+.flow-panels { background:transparent; }
+.flow-status { min-height:38px; margin:12px 0; }
+.flow-state-badge { color:var(--selected-text); background:var(--selected); padding:3px 8px; border-radius:4px; font-size:11px; }
+.flow-editor-grid { display:grid; grid-template-columns:minmax(0,1fr) 220px; gap:14px; align-items:start; }
+.flow-source-column { display:none; min-width:0; }
+.source-mode .flow-editor-grid { grid-template-columns:minmax(230px,.8fr) minmax(0,1.4fr); }
+.source-mode .flow-source-column { display:flex; }
+.source-mode .flow-detail-panel { display:none; }
+.flow-canvas-column { min-width:0; width:100%; }
+.flow-source-editor textarea { height:625px!important; font:12px/1.8 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace!important; white-space:pre; overflow-wrap:normal; overflow:auto; tab-size:4; }
+.flow-source-editor .q-field__control { height:auto!important; }
+.flow-detail-panel { min-width:0; border:1px solid var(--line); background:var(--surface); padding:16px; border-radius:7px; overflow-wrap:anywhere; }
+.flow-node-title { color:var(--ink); font-size:14px; font-weight:600; line-height:1.8; }
+.flow-configurable { color:#92400e; background:#fff0cc; border:1px solid #d97706; padding:3px 7px; border-radius:4px; font-size:11px; }
+.flow-details-open { display:none; }
+.source-mode .flow-details-open { display:inline-flex; }
+.flow-detail-dialog { max-width:420px; width:90vw; padding:24px; }
+.flow-leave-dialog { max-width:520px; padding:24px; }
+.flowchart-canvas { width:100%; border:1px solid var(--line); border-radius:7px; overflow:hidden; background:var(--surface); color:var(--ink); }
+.flowchart-canvas-tools { min-height:44px; display:flex; align-items:center; flex-wrap:wrap; gap:7px; padding:8px 10px; border-bottom:1px solid var(--line); background:var(--soft); }
+.flowchart-canvas-tools button { border:1px solid var(--line); color:var(--ink); background:var(--surface); border-radius:4px; padding:3px 9px; font-size:12px; cursor:pointer; min-height:28px; }
+.flowchart-canvas-tools button:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+.flowchart-zoom-label { font-size:11px; min-width:40px; text-align:center; font-variant-numeric:tabular-nums; }
+.flowchart-canvas-hint { color:var(--muted); font-size:10px; }
+.flowchart-viewport { position:relative; height:660px; width:100%; overflow:hidden; touch-action:none; cursor:grab; background-image:radial-gradient(var(--line) .7px,transparent .7px); background-size:18px 18px; }
+.flowchart-viewport:active { cursor:grabbing; }
+.flowchart-diagram { position:absolute; left:0; top:0; transform-origin:0 0; }
+.flowchart-diagram svg { display:block; overflow:visible; }
+.flowchart-diagram g.node { cursor:pointer; outline:none; }
+.flowchart-diagram g.node.flow-node-selected > :is(rect,polygon,path,circle,ellipse), .flowchart-diagram g.node:focus > :is(rect,polygon,path,circle,ellipse) { stroke:var(--accent)!important; stroke-width:3.5px!important; }
+.flowchart-canvas-empty { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; color:var(--muted); font-size:13px; pointer-events:none; }
+.flowchart-canvas:fullscreen { height:100vh; width:100vw; background:var(--canvas); }
+.flowchart-canvas:fullscreen .flowchart-viewport { height:calc(100vh - 48px); }
+@media (max-width:1380px) { .flow-editor-grid { grid-template-columns:minmax(0,1fr); } .flow-detail-panel { display:none; } .flow-details-open { display:inline-flex; } .flowchart-canvas-hint { display:none; } }
+@media (max-width:1000px) { .flow-workspace { grid-template-columns:1fr; } .flow-catalog { flex-direction:row; align-items:center; flex-wrap:wrap; } .flow-catalog-item { width:auto; } .flow-catalog > .flow-version-note { display:none; } .flow-source-editor textarea { height:360px!important; } .source-mode .flow-editor-grid { grid-template-columns:1fr; } }
