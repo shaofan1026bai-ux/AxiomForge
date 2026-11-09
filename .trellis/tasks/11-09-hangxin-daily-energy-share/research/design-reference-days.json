@@ -1,0 +1,229 @@
+[
+  {
+    "date": "2026-10-24",
+    "complete": true,
+    "total": 2140.8000000000015,
+    "known_subtotal": 2140.8000000000015,
+    "items": [
+      {
+        "name": "美的空调1电表",
+        "kwh": 1.8999999999996362,
+        "estimated": true,
+        "missing": []
+      },
+      {
+        "name": "美的空调2电表",
+        "kwh": 18.25,
+        "estimated": true,
+        "missing": []
+      },
+      {
+        "name": "美的空调3电表",
+        "kwh": 156.8000000000029,
+        "estimated": true,
+        "missing": []
+      },
+      {
+        "name": "美的空调4电表",
+        "kwh": 29.5,
+        "estimated": true,
+        "missing": []
+      },
+      {
+        "name": "美的空调5电表",
+        "kwh": 314.2999999999993,
+        "estimated": true,
+        "missing": []
+      },
+      {
+        "name": "三菱外机电表",
+        "kwh": 667.25,
+        "estimated": true,
+        "missing": []
+      },
+      {
+        "name": "冷水主机总表",
+        "kwh": 231.50000000000182,
+        "estimated": false,
+        "missing": []
+      },
+      {
+        "name": "AHU总表",
+        "kwh": 721.2999999999979,
+        "estimated": true,
+        "missing": []
+      }
+    ]
+  },
+  {
+    "date": "2026-10-25",
+    "complete": true,
+    "total": 2513.149999999997,
+    "known_subtotal": 2513.149999999997,
+    "items": [
+      {
+        "name": "美的空调1电表",
+        "kwh": 1.800000000000182,
+        "estimated": true,
+        "missing": []
+      },
+      {
+        "name": "美的空调2电表",
+        "kwh": 0.0,
+        "estimated": true,
+        "missing": []
+      },
+      {
+        "name": "美的空调3电表",
+        "kwh": 181.29999999999927,
+        "estimated": true,
+        "missing": []
+      },
+      {
+        "name": "美的空调4电表",
+        "kwh": 105.84999999999854,
+        "estimated": true,
+        "missing": []
+      },
+      {
+        "name": "美的空调5电表",
+        "kwh": 324.59999999999854,
+        "estimated": true,
+        "missing": []
+      },
+      {
+        "name": "三菱外机电表",
+        "kwh": 708.0,
+        "estimated": true,
+        "missing": []
+      },
+      {
+        "name": "冷水主机总表",
+        "kwh": 246.89999999999873,
+        "estimated": false,
+        "missing": []
+      },
+      {
+        "name": "AHU总表",
+        "kwh": 944.7000000000016,
+        "estimated": true,
+        "missing": []
+      }
+    ]
+  },
+  {
+    "date": "2026-10-26",
+    "complete": true,
+    "total": 2575.500000000004,
+    "known_subtotal": 2575.500000000004,
+    "items": [
+      {
+        "name": "美的空调1电表",
+        "kwh": 0.6999999999998181,
+        "estimated": true,
+        "missing": []
+      },
+      {
+        "name": "美的空调2电表",
+        "kwh": 1.1000000000000227,
+        "estimated": true,
+        "missing": []
+      },
+      {
+        "name": "美的空调3电表",
+        "kwh": 187.9499999999989,
+        "estimated": true,
+        "missing": []
+      },
+      {
+        "name": "美的空调4电表",
+        "kwh": 141.0,
+        "estimated": true,
+        "missing": []
+      },
+      {
+        "name": "美的空调5电表",
+        "kwh": 347.95000000000437,
+        "estimated": true,
+        "missing": []
+      },
+      {
+        "name": "三菱外机电表",
+        "kwh": 732.5,
+        "estimated": true,
+        "missing": []
+      },
+      {
+        "name": "冷水主机总表",
+        "kwh": 260.8000000000002,
+        "estimated": false,
+        "missing": []
+      },
+      {
+        "name": "AHU总表",
+        "kwh": 903.5000000000009,
+        "estimated": true,
+        "missing": []
+      }
+    ]
+  },
+  {
+    "date": "2026-10-27",
+    "complete": false,
+    "total": null,
+    "known_subtotal": 1655.1500000000026,
+    "items": [
+      {
+        "name": "美的空调1电表",
+        "kwh": 0.0,
+        "estimated": true,
+        "missing": []
+      },
+      {
+        "name": "美的空调2电表",
+        "kwh": 2.6999999999999886,
+        "estimated": true,
+        "missing": []
+      },
+      {
+        "name": "美的空调3电表",
+        "kwh": 78.80000000000109,
+        "estimated": true,
+        "missing": []
+      },
+      {
+        "name": "美的空调4电表",
+        "kwh": 49.75000000000182,
+        "estimated": true,
+        "missing": []
+      },
+      {
+        "name": "美的空调5电表",
+        "kwh": 334.09999999999854,
+        "estimated": true,
+        "missing": []
+      },
+      {
+        "name": "三菱外机电表",
+        "kwh": 783.5,
+        "estimated": true,
+        "missing": []
+      },
+      {
+        "name": "冷水主机总表",
+        "kwh": 406.3000000000011,
+        "estimated": false,
+        "missing": []
+      },
+      {
+        "name": "AHU总表",
+        "kwh": null,
+        "estimated": false,
+        "missing": [
+          "AHU1电表",
+          "AHU5电表"
+        ]
+      }
+    ]
+  }
+]
