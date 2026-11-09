@@ -3,7 +3,14 @@ name = "axiomforge"
 version = "0.1.0"
 description = "A local personal algorithm workbench built with NiceGUI"
 requires-python = ">=3.12"
-dependencies = ["nicegui>=3.0,<4"]
+dependencies = [
+    "cryptography>=50.0.2",
+    "httpx>=0.28.1",
+    "nicegui>=3.0,<4",
+    "python-dotenv==1.2.3",
+    "surrealdb==2.0.0",
+    "truststore>=0.10.5",
+]
 
 [project.scripts]
 axiomforge = "axiomforge.main:main"
