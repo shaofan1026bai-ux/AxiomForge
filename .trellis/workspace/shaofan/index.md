@@ -8,8 +8,8 @@
 
 <!-- @@@auto:current-status -->
 - **Active File**: `journal-1.md`
-- **Total Sessions**: 1
-- **Last Active**: 2026-11-04
+- **Total Sessions**: 2
+- **Last Active**: 2026-11-09
 <!-- @@@/auto:current-status -->
 
 ---
@@ -19,7 +19,7 @@
 <!-- @@@auto:active-documents -->
 | File | Lines | Status |
 |------|-------|--------|
-| `journal-1.md` | ~34 | Active |
+| `journal-1.md` | ~75 | Active |
 <!-- @@@/auto:active-documents -->
 
 ---
@@ -29,6 +29,7 @@
 <!-- @@@auto:session-history -->
 | # | Date | Title | Commits | Branch |
 |---|------|-------|---------|--------|
+| 2 | 2026-11-09 | 按模块提交航信专题与算法流程图 | `3357e18`, `53ec401`, `ac5133e`, `231e245`, `b8e999c`, `275b8ee`, `0905578` | `main` |
 | 1 | 2026-11-04 | NiceGUI Research Canvas style prototype | - | `main` |
 <!-- @@@/auto:session-history -->
 
