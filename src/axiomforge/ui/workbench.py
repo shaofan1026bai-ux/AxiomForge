@@ -7,8 +7,12 @@ from pathlib import Path
 from typing import Any
 from zoneinfo import ZoneInfo
 
+from fastapi import Request
+from fastapi.responses import RedirectResponse
 from nicegui import events, ui
 
+from axiomforge.auth import Session, sessions
+from axiomforge.auth_socket import bind_client
 from axiomforge.demo import (
     DEMO_END,
     DEMO_START,
@@ -53,7 +57,8 @@ THEME_BOOTSTRAP = """
 class Workbench:
     """All mutable view state belongs to one NiceGUI client."""
 
-    def __init__(self) -> None:
+    def __init__(self, session: Session | None = None) -> None:
+        self.auth_session = session
         self.drawer: ui.left_drawer
         self.project_id = ""
         self.device = ""
@@ -116,6 +121,23 @@ class Workbench:
                     .classes("theme-toggle")
                 )
                 ui.label("Asia/Shanghai · 本地工作台").classes("timezone")
+                if self.auth_session is not None:
+                    with ui.row().classes("auth-account items-center no-wrap"):
+                        ui.icon("account_circle").classes("text-lg")
+                        ui.label(self.auth_session.account).classes("auth-account-name").tooltip(
+                            self.auth_session.account
+                        )
+                        with ui.element("form").props("method=post action=/logout"):
+                            ui.element("input").props(
+                                f'type=hidden name=csrf value="{self.auth_session.csrf}"'
+                            )
+                            with (
+                                ui.element("button")
+                                .props('type=submit aria-label="退出登录"')
+                                .classes("auth-logout")
+                            ):
+                                ui.icon("logout")
+                                ui.label("退出")
 
         with (
             ui.left_drawer(value=True, fixed=True)
@@ -387,6 +409,7 @@ class Workbench:
             if self.section == "algorithms"
             else "演示环境"
         )
+        self.flight_view.deactivate()
         self.power_view.deactivate()
         self.ahu_view.deactivate()
         self.energy_view.deactivate()
@@ -731,9 +754,30 @@ class Workbench:
             ).props("flat no-caps").classes("secondary-btn mt-2")
 
 
-async def create_page() -> None:
-    workbench = Workbench()
+async def create_page(request: Request) -> RedirectResponse | None:
+    session = getattr(request.state, "auth_session", None)
+    if not isinstance(session, Session) or sessions.get(session.token) is None:
+        return RedirectResponse("/login", status_code=303)
+    client = ui.context.client
+    bind_client(client, session)
+    workbench = Workbench(session)
+
+    def revoke_client() -> None:
+        # 撤销所有已打开页，后台查询只能退出，不能发布迟到数据。
+        workbench.power_view.deactivate()
+        workbench.ahu_view.deactivate()
+        workbench.energy_view.deactivate()
+        workbench.flowchart_view.deactivate()
+        workbench.flight_view.deactivate()
+        workbench.flight_view.snapshot = None
+        if not client.is_deleted:
+            client.delete()
+
+    unsubscribe = sessions.on_revoke(session.token, revoke_client)
+    client.on_delete(unsubscribe)
     workbench.build()
+    ui.context.client.on_disconnect(workbench.flight_view.deactivate)
+    ui.context.client.on_connect(workbench.flight_view.reconnect)
     ui.context.client.on_disconnect(workbench.power_view.deactivate)
     ui.context.client.on_connect(workbench.power_view.reconnect)
     ui.context.client.on_disconnect(workbench.ahu_view.deactivate)
@@ -745,3 +789,4 @@ async def create_page() -> None:
     await workbench.initialize_preferences()
     await workbench.ahu_view.initialize_preferences()
     await workbench.energy_view.initialize_preferences()
+    return None

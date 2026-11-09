@@ -28,6 +28,7 @@ Run the lint, format, type and test commands in `nicegui-workbench.md`, then ver
 | [AHU回风温度专题](./ahu-temperature.md) | 条件恢复、窗口摘要、五台对比与异步快照 | Implemented |
 | [每日用电占比](./energy-share.md) | 每日用电页面与快照 | Implemented |
 | [算法流程图](./algorithm-flowcharts.md) | 草稿／预览／保存版本、画布与切换保护 | 已实现并验证 |
+| [登录与准入](../backend/authentication.md) | 小麦身份、会话与HTTP／Socket边界 | 已实现 |
 | [Directory Structure](./directory-structure.md) | Module organization and file layout | To fill |
 | [Component Guidelines](./component-guidelines.md) | Component patterns, props, composition | To fill |
 | [Hook Guidelines](./hook-guidelines.md) | Custom hooks, data fetching patterns | To fill |

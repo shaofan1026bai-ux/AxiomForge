@@ -19,6 +19,7 @@ This directory contains guidelines for backend development. Fill in each file wi
 | [AHU回风温度合同](./ahu-temperature.md) | 每日窗口、运行配对、分位数、质量与只读源 | Implemented |
 | [每日用电占比](./energy-share.md) | 每日用电领域与数据源 | Implemented |
 | [算法流程图](./algorithm-flowcharts.md) | 图示版本、项目隔离、SQLite与SVG边界 | 已实现并验证 |
+| [登录与准入](./authentication.md) | 小麦身份、会话与HTTP／Socket边界 | 已实现 |
 | [Directory Structure](./directory-structure.md) | Module organization and file layout | To fill |
 | [Database Guidelines](./database-guidelines.md) | ORM patterns, queries, migrations | To fill |
 | [Error Handling](./error-handling.md) | Error types, handling strategies | To fill |

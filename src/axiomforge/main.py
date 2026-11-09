@@ -3,8 +3,10 @@
 import argparse
 import os
 
-from nicegui import ui
+from nicegui import app, ui
 
+from axiomforge.auth import install_auth
+from axiomforge.auth_socket import install_socket_guard
 from axiomforge.ui.workbench import create_page
 
 
@@ -18,6 +20,8 @@ def main() -> None:
         os.environ["AXIOMFORGE_FLIGHT_ENV_FILE"] = args.flight_env_file
     if args.xiaomai_env_file:
         os.environ["AXIOMFORGE_XIAOMAI_ENV_FILE"] = args.xiaomai_env_file
+    install_auth(app)
+    install_socket_guard()
     ui.page("/")(create_page)
     ui.run(
         host="127.0.0.1",

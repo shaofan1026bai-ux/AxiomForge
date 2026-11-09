@@ -16,7 +16,7 @@ Applies to `src/axiomforge/main.py`, `ui/`, and `demo.py`. The current app is a 
 - `generate_samples(project_id: str, device: str, start: date, end: date, params: Parameters) -> list[Sample]`.
 - `export_csv(project_id: str, device: str, samples: list[Sample]) -> bytes`.
 - `chart_options(samples, params, dark, *, scatter=False) -> dict[str, Any]` creates fresh options per client.
-- `create_page()` creates one `Workbench` instance per browser client.
+- `create_page(request)` verifies the server session and creates one `Workbench` instance per authenticated browser client.
 
 ## 3. Contracts
 
@@ -79,3 +79,7 @@ Wrong: export currently visible samples using newly edited device/date metadata.
 Correct: block export while filters are stale; only export after validated recomputation.
 
 航信“每日用电占比”采用独立`EnergyShareView`和路由`daily-energy-share`，见[页面合同](energy-share.md)及[领域合同](../backend/energy-share.md)。项目切换确认包含其dirty/loading，断开与离页使迟到结果失效，恢复偏好不自动请求。
+
+## 登录准入
+
+生产入口`create_page(request)`仅在服务端会话有效时构建Workbench并绑定client，见[登录合同](../backend/authentication.md)。右上角显示会话账号，以带CSRF的原生POST表单退出。注销会销毁本会话所有业务client，使源查询迟到结果失效。项目、主题和专题条件偏好保持非敏感缓存，不作为身份凭证。

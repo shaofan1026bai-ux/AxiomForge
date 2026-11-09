@@ -33,6 +33,8 @@ class FlightView:
         self.direction = "all"
         self.status = "全部"
         self.loading = False
+        self.mounted = False
+        self.generation = 0
         self.error = ""
         self.dark = False
         self.container: ui.column | None = None
@@ -40,7 +42,18 @@ class FlightView:
         self.lists: ui.element | None = None
         self.chart: ui.echart | None = None
 
+    def deactivate(self) -> None:
+        """离页或注销后让正在等待的只读结果失效。"""
+        self.mounted = False
+        self.generation += 1
+        self.loading = False
+
+    def reconnect(self) -> None:
+        if self.container is not None and not self.container.is_deleted:
+            self.mounted = True
+
     def build(self, dark: bool) -> None:
+        self.mounted = True
         self.dark = dark
         self.container = ui.column().classes("flight-page w-full gap-0")
         self.redraw()
@@ -115,7 +128,7 @@ class FlightView:
         self.render_lists()
 
     async def refresh(self) -> None:
-        if self.loading:
+        if self.loading or not self.mounted:
             return
         try:
             requested = date.fromisoformat(self.day_input)
@@ -124,16 +137,21 @@ class FlightView:
             self.redraw()
             return
         self.loading = True
+        self.generation += 1
+        generation = self.generation
         self.error = ""
         self.redraw()
         try:
             snapshot = await run.io_bound(load_flights, requested)
-            self.snapshot, self.day = snapshot, requested
+            if self.mounted and generation == self.generation:
+                self.snapshot, self.day = snapshot, requested
         except FlightSourceError as exc:
-            self.error = str(exc)
+            if self.mounted and generation == self.generation:
+                self.error = str(exc)
         finally:
-            self.loading = False
-            self.redraw()
+            if self.mounted and generation == self.generation:
+                self.loading = False
+                self.redraw()
 
     def selected(self) -> list[Flight]:
         return [f for f in self.snapshot.flights if f.day == self.day] if self.snapshot else []

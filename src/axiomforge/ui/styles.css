@@ -202,3 +202,12 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC"
   .power-metrics { grid-template-columns: 1fr; }
   .power-date { width: 100%; }
 }
+
+/* 账户区与退出表单由服务端会话提供，不借浏览器偏好判断身份。 */
+.auth-account { gap:6px; margin-left:auto; flex-shrink:0; color:var(--muted); }
+.auth-account-name { max-width:110px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:12px; }
+.auth-logout { display:flex; align-items:center; gap:4px; padding:6px 9px; border:1px solid var(--line); border-radius:6px; background:var(--surface); color:var(--ink); cursor:pointer; font:inherit; font-size:12px; }
+.auth-logout:hover { background:var(--selected); color:var(--accent); }
+.auth-logout:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+@media(max-width:1400px) { .auth-account-name { max-width:80px; } .topbar .timezone { display:none; } }
+@media(max-width:900px) { .auth-account-name { display:none; } }
