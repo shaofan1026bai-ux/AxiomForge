@@ -73,3 +73,37 @@ Implemented approved concept 3 with three project contexts, light/dark/system th
 ### Next Steps
 
 - 可按需要审阅七个功能提交后再推送远程。
+
+
+## Session 3: 小麦登录与80端口HTTPS部署
+
+**Date**: 2026-11-09
+**Task**: 小麦登录与80端口HTTPS部署
+**Branch**: `main`
+
+### Summary
+
+新增小麦平台身份验证、8小时服务端会话与HTTP/Socket保护；318测试和公网真实登录/退出/WS通过；部署123.60.61.161仍使用80端口可信HTTPS，保留白名单、原业务、数据与双源配置。
+
+### Main Changes
+
+- 登录原生表单、CSRF、会话撤销与跨会话传输校验
+- d2ad455独立release上线，旧版本及SQLite备份保留
+- HTTP/TLS同80分流与可信IP证书自动续期
+
+### Git Commits
+
+| Hash | Message |
+|------|---------|
+| `d2ad455` | (see git log) |
+| `949127b` | (see git log) |
+
+### Testing
+
+- [OK] 318 passed；ruff/format/mypy28源及diff通过
+- [OK] 公网HTTPS80登录/受保护页面/WS ack/退出及旧Cookie失效通过
+- [OK] 浏览器服务器登录页、原业务200和PROXY非白名单403通过
+
+### Status
+
+[OK] **Completed**
