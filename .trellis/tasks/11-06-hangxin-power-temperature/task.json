@@ -1,0 +1,30 @@
+{
+  "id": "hangxin-power-temperature",
+  "name": "hangxin-power-temperature",
+  "title": "航信功率与温度分析专题",
+  "description": "基于航信小麦真实功率与室外温度测点设计只读分析专题，包含趋势、相关性、质量、联动和导出。",
+  "status": "in_progress",
+  "dev_type": "fullstack",
+  "scope": "hangxin-power-temperature",
+  "package": null,
+  "priority": "P2",
+  "creator": "shaofan",
+  "assignee": "shaofan",
+  "createdAt": "2026-11-06",
+  "completedAt": null,
+  "branch": null,
+  "base_branch": "main",
+  "worktree_path": null,
+  "commit": null,
+  "pr_url": null,
+  "subtasks": [],
+  "children": [],
+  "parent": null,
+  "relatedFiles": [
+    "docs/interfaces/projects/hangxin-airport/connections.md",
+    "src/axiomforge/ui/workbench.py",
+    "src/axiomforge/main.py"
+  ],
+  "notes": "实现和只读实查／浏览器验收完成；trellis-check通过，55项测试通过。等待用户确认commit-plan.md，不暂存、提交或归档历史工作。",
+  "meta": {}
+}
