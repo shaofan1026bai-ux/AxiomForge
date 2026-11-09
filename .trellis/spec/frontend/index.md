@@ -24,6 +24,10 @@ Run the lint, format, type and test commands in `nicegui-workbench.md`, then ver
 | Guide | Description | Status |
 |-------|-------------|--------|
 | [NiceGUI Workbench](./nicegui-workbench.md) | Client state, themes, demo contracts and validation | Implemented |
+| [功率与温度专题](./power-temperature.md) | 真实测点、快照状态、双图联动与只读源 | Implemented |
+| [AHU回风温度专题](./ahu-temperature.md) | 条件恢复、窗口摘要、五台对比与异步快照 | Implemented |
+| [每日用电占比](./energy-share.md) | 每日用电页面与快照 | Implemented |
+| [算法流程图](./algorithm-flowcharts.md) | 草稿／预览／保存版本、画布与切换保护 | 已实现并验证 |
 | [Directory Structure](./directory-structure.md) | Module organization and file layout | To fill |
 | [Component Guidelines](./component-guidelines.md) | Component patterns, props, composition | To fill |
 | [Hook Guidelines](./hook-guidelines.md) | Custom hooks, data fetching patterns | To fill |
@@ -46,4 +50,4 @@ The goal is to help AI assistants and new team members understand how YOUR proje
 
 ---
 
-**语言**：AI 约束、开发规范、代码注释和文档字符串以中文为主；必要的技术标识保留英文。Git 提交格式遵循根目录 `AGENTS.md`：英文前缀 `fix:`，后接中文说明，如 `fix: 修复styles.css文件的暗色样式`。
+**语言**：AI 约束、开发规范、代码注释和文档字符串以中文为主；必要的技术标识保留英文。Git 提交格式遵循根目录 `AGENTS.md`：按变更选择类型（如`feat`、`fix`、`docs`），后接中文说明，如 `fix: 修复styles.css文件的暗色样式`。

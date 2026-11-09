@@ -42,6 +42,8 @@ Name, project applicability and immutable version. Sections `逻辑说明`, `参
 
 Source is read-only in the first planned UI; changes happen through Codex. Typed parameter edits do not modify source. No arbitrary Python evaluation from browser input.
 
+本轮“算法与规则”增加可编辑的Mermaid图示模块：目录按项目隔离，航信首条AHU运行策略包含用户原始9节点9边；图示版本与可执行算法版本独立。布局为目录、画布和节点详情，提供源码预览、版本保存、历史派生及完整SVG导出。这里编辑的是说明图，不执行Python、现场控制或运行参数发布。操作与边界见[算法流程图说明](algorithm-flowcharts.md)。
+
 ### Model Experiment
 
 Choose dataset, registered workflow, target and factors. Show training/validation/test ranges before submission. Running jobs display status/logs without fabricated completion percentages. Results compare baseline metrics, actual/predicted curves and residuals. Flag incompatible targets, units or test datasets when comparing.
@@ -113,3 +115,27 @@ Selected light reference: [Research Canvas concept](assets/research-canvas-light
 - Filters/parameters/records are session-only and reset on reload; only theme preference persists. No SQLite, live connection, worker supervisor, training or scheduler is claimed.
 - CSV generation and provenance are unit-tested. Browser download verification was declined by the browser permission gate and was not retried or bypassed.
 - See [design QA](../../design-qa.md) for comparisons, checks and residual limitations.
+
+## 航信今日航班专栏（2026-11-04）
+
+用户选定进出港双栏，并追加长间隔时间带。实现入口仅在航信项目显示；共享壳层和主题不变。上方为手动日期查询与搜索、计划航班／进港／出港／本场已有实际时刻摘要，中部合并全量进出港绘制时间带与长间隔分页表，下方为双栏分页列表。列表搜索与方向／状态筛选不影响空档计算。
+
+支持计划与动态（实际→预计→计划）时刻；默认间隔阈值30分钟可调。相邻计划日参与空档分割，跨日标注“次日”，首末端无数据不外推空档。保障时间未配置，当前不输出可停机时段或设备指令。真实查询通过服务器外部配置启用，不在前端暴露凭据。
+
+浏览器已检查真实查询、搜索不影响间隔、30→60分钟阈值、动态切换、分页、项目入口隔离、1440×1024及1280×800亮暗主题。快照只保存在当前浏览器对应的服务端内存，页面刷新后需重新查询。字段和已知限制以[航班数据口径](../interfaces/systems/mangshi-flights/query/flights.md)为准。
+
+### 国内／国际区域细分（2026-11-05）
+
+用户确认国内与国际分别对应进出港区域。航班间隔新增“全场合并／国内进港／国内出港／国际进港／国际出港”范围按钮，显示当日各范围数量。全场时间带分四轨，区域视图只显示对应轨道与列表；搜索不改变区域间隔，切换区域时清除不兼容的方向过滤。航班行显示国内／国际／待确认标签。分类采用当前源库fcategory的样本映射，正式字典待确认；未知属性保守阻断同方向区域间隔，不默认国内，不生成设备策略。
+
+本轮19项测试通过，真实数据与五种区域组件构建已核对；浏览器控制连接超时，本轮新增布局尚未完成浏览器视觉验收。
+
+## 航信功率与温度真实专题（2026-11-06）
+
+航信项目的“功率与温度分析”及“数据分析”入口使用真实小麦View。用户于2026-11-06追加明确：华师大和大润发隐藏整个航信专题分组，默认进入项目概览，共享“数据分析”显示待接入状态；不展示功率与温度演示专题。页面沿用Research Canvas及亮／暗／系统主题，使用“小麦只读”环境标签，不再展示演示算法参数和模拟运行记录。
+
+顶部为今天／昨天／自定义时间、查询与完整范围CSV导出；默认今天，截至提交时刻，最长7天、固定上游2分钟。结果页提供平均功率、最大功率、温度范围和有效配对比例四项摘要，趋势与散点并排或窄屏上下排列。“缩放查看”不改分析范围，“选择分析时段”联动摘要与散点；点击散点定位趋势中的时间，重置恢复完整统计。
+
+“数据明细”提供分页及选区查看；“测点与口径”保留两台来源设备、测点ID、单位和统计定义。缺失不填0，温度统计与功率缺失独立，r在样本不足或恒定时明确不可计算。CSV始终导出完整成功快照，包含来源、时区与数据状态。
+
+初次进入不调用上游；查询失败保留旧快照，草稿待更新及失败时禁用导出。每客户端独立快照与请求代号，切项目／离页后迟到响应不得污染新画面。浏览器刷新后需重新查询，主题变化不触发取数。接口与时间口径见[小麦历史契约](../interfaces/systems/xiaomai/query/history.md)。本轮验收证据记录在专题任务的`research/`目录。

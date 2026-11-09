@@ -1,6 +1,6 @@
 # Workbench Architecture
 
-Status: architecture proposal with the first NiceGUI style prototype implemented, 2026-11-04. Live connectors, durable execution, training and scheduling remain future work. See [screen design](workbench-ui.md) and [planning task](../../.trellis/tasks/11-04-nicegui-workbench-design/prd.md).
+Status: architecture proposal with the first NiceGUI style prototype implemented, 2026-11-04. 航信航班只读查询已接入；持久化执行、训练、设备控制和调度仍待实现。See [screen design](workbench-ui.md) and [planning task](../../.trellis/tasks/11-04-nicegui-workbench-design/prd.md).
 
 ## Product Boundary
 
@@ -30,7 +30,11 @@ tests/
 docs/interfaces/          # existing human/AI-readable documentation
 ```
 
-Only `main.py`, `ui/`, and a separate deterministic `demo.py` are implemented. The remaining directories are proposed, not scaffolded. No separate React frontend or duplicate standalone API service is needed initially.
+已实现 `main.py`、`ui/`、独立演示模块 `demo.py`，以及航班领域模块 `flights.py` 和只读适配模块 `flight_source.py`。其余目录仍为提案。航班当前直接调用服务，不新增独立HTTP接口；详见[数据契约](../interfaces/systems/mangshi-flights/query/flights.md)。No separate React frontend or duplicate standalone API service is needed initially.
+
+航信功率与温度专题新增 `power_temperature.py`领域层、`xiaomai_source.py`只读适配层及独立UI／图表模块。每浏览器持有查询快照、选区与状态；服务端使用外部小麦凭据，每次手动查询登录并核验项目和测点后分片读取历史。只有完整成功结果才发布，密码与Token不进入快照或前端；没有新增独立API服务、数据库或控制模块。
+
+算法流程图使用独立领域／存储及UI画布模块，图示以本机SQLite保存不可变版本，默认`.nicegui/algorithm-flowcharts.sqlite3`。这是说明图的持久化，不意味着运行记录、模型或定时任务数据库已经落地。用户草稿和渲染状态每浏览器独立，保存接口验证项目归属和并发基线；Mermaid渲染不访问现场系统。
 
 ## Execution Boundaries
 

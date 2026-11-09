@@ -91,9 +91,12 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC"
 .parameter-fields .q-field { width: 100%; }
 .code-panel { margin-top: 24px; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
 .q-menu, .q-dialog__inner > div { background: var(--surface)!important; color: var(--ink)!important; }
-.overview-list { margin-top: 28px; display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 18px; }
+.overview-list { margin-top: 28px; width: 100%; display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 18px; }
 .project-tile { padding: 24px; border: 1px solid var(--line); border-radius: 7px; background: var(--surface); gap: 12px; }
+.project-tile.current-project { border-color: var(--accent); }
 .project-tile .q-icon { color: var(--accent); }
+.project-tile .primary-btn { margin-top: auto; }
+.project-tile .primary-btn .q-icon { color: inherit; }
 .project-name { font-size: 17px; font-weight: 600; }
 .info-row { padding: 16px 0; border-bottom: 1px solid var(--line); width: 100%; align-items: center; }
 .q-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
@@ -120,4 +123,82 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC"
   .theme-toggle .q-btn { padding: 2px 7px; }
   .parameter-grid { grid-template-columns: 1fr; gap: 24px; }
   .parameter-help { border-left: 0; padding-left: 0; }
+}
+
+/* 航班专栏延续工作台语义色；时间带和双栏表格独立于列表筛选。 */
+.flight-toolbar { gap: 12px; align-items: center; margin: 24px 0 18px; }
+.flight-date { width: 170px; }
+.flight-search { width: 220px; }
+.flight-direction { width: 140px; }
+.flight-toolbar .q-field { max-width: 230px; }
+.flight-summary { align-items: center; padding: 18px 0; gap: 22px; border-block: 1px solid var(--line); }
+.flight-metric { align-items: baseline; gap: 8px; }
+.flight-number { color: var(--accent); font-size: 24px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.flight-section-title { font-size: 18px; font-weight: 650; }
+.flight-accent { color: var(--accent); }
+.flight-gap-panel { margin: 20px 0 12px; padding: 18px 20px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); gap: 12px; }
+.flight-minimum { width: 150px; }
+.flight-timeline { width: 100%; height: 155px; }
+.flight-gap-table { width: 100%; }
+.flight-buffer { padding: 10px 14px; border-radius: 5px; background: var(--soft); color: var(--ink); width: 100%; }
+.flight-warning { color: var(--ink); background: var(--selected); border-left: 3px solid var(--accent); padding: 10px 14px; margin: 8px 0; width: 100%; }
+.flight-list-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+.flight-list { min-width: 0; }
+.flight-list-heading { align-items: center; padding: 16px 0; gap: 10px; }
+.flight-table { width: 100%; min-width: 0; }
+.flight-table td, .flight-table th { padding: 10px 8px!important; font-size: 12px; }
+.flight-table th { color: var(--muted); }
+.flight-table td { font-variant-numeric: tabular-nums; }
+.flight-table td:first-child { font-weight: 650; }
+.flight-table .q-table__middle { overflow-x: auto; }
+.flight-state { padding: 3px 6px; border-radius: 4px; font-size: 11px; display: inline-block; }
+.flight-state.complete { color: var(--success); background: color-mix(in srgb, var(--success) 10%, transparent); }
+.flight-state.planned { color: var(--muted); background: var(--soft); }
+.flight-state.pending { color: var(--selected-text); background: var(--selected); }
+.flight-provenance { margin-top: 16px; color: var(--muted); }
+@media (max-width: 1150px) {
+  .flight-list-grid { grid-template-columns: 1fr; }
+  .flight-toolbar { flex-wrap: wrap; }
+}
+.flight-id { font-size: 14px; font-weight: 650; }
+.flight-route { font-size: 12px; font-weight: 400; color: var(--muted); margin-top: 6px; }
+.flight-times { display: flex; gap: 12px; white-space: nowrap; font-size: 13px; }
+.flight-times span { display: flex; flex-direction: column; gap: 5px; }
+.flight-times small { font-size: 11px; color: var(--muted); }
+.flight-state { white-space: nowrap; }
+/* 区域范围是业务计算范围，与列表过滤独立。 */
+.flight-area-bar { gap: 8px; margin-top: 16px; flex-wrap: wrap; }
+.flight-area-button { color: var(--muted); border-radius: 6px; }
+.flight-area-button.active { color: var(--selected-text); background: var(--selected); }
+.flight-list-grid.flight-list-single { grid-template-columns: 1fr; }
+.flight-region { color: var(--selected-text); background: var(--selected); padding: 1px 4px; border-radius: 3px; }
+.flight-timeline { height: 205px; }
+
+/* 真实功率专题沿用工作台语义色，窄屏优先保留坐标与时间标签。 */
+.power-toolbar { gap: 12px; align-items: center; margin: 22px 0 8px; }
+.power-preset { width: 125px; }
+.power-date { width: 215px; }
+.power-tabs { margin-top: 18px; color: var(--accent); border-bottom: 1px solid var(--line); }
+.power-panels { background: transparent!important; color: var(--ink); }
+.power-panels > .q-tab-panel { padding: 0; }
+.power-scope { color: var(--muted); margin: 18px 0 10px; font-size: 12px; }
+.power-metrics { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 12px; width: 100%; }
+.power-metric { padding: 15px 16px; background: var(--surface); border: 1px solid var(--line); border-radius: 7px; gap: 5px; min-width: 0; }
+.power-value { font-size: 23px; font-weight: 650; color: var(--ink); font-variant-numeric: tabular-nums; }
+.power-note { color: var(--muted); font-size: 11px; }
+.power-chart-grid { width: 100%; display: grid; grid-template-columns: minmax(0,2fr) minmax(0,1fr); gap: 16px; }
+.power-plot { height: 360px; width: 100%; min-width: 0; }
+.power-chart-tools { gap: 12px; align-items: center; margin: 20px 0 12px; }
+.power-mode { background: var(--soft); color: var(--ink); }
+.power-correlation { font-size: 12px; color: var(--muted); line-height: 1.8; padding-bottom: 12px; }
+.power-source { border: 1px solid var(--line); background: var(--surface); border-radius: 7px; padding: 16px; margin-bottom: 12px; }
+.power-point-id { font-family: ui-monospace,monospace; overflow-wrap: anywhere; user-select: all; }
+.power-page .q-table__bottom { color: var(--ink); }
+@media (max-width: 1380px) {
+  .power-chart-grid { grid-template-columns: minmax(0,1fr); }
+  .power-metrics { grid-template-columns: repeat(2,minmax(0,1fr)); }
+}
+@media (max-width: 650px) {
+  .power-metrics { grid-template-columns: 1fr; }
+  .power-date { width: 100%; }
 }

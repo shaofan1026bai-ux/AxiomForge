@@ -43,9 +43,9 @@ Embedded AI chat, prompt-to-code in the browser, SaaS accounts, cloud hosting, a
 
 ## Open Product Decisions
 
-1. Production startup behavior remains deferred; the approved style prototype opens the selected analysis topic. The refined theme selector includes system-following mode.
+1. 启动行为已由用户于 2026-11-04 明确：首次打开显示项目概览，从卡片选择进入分析；同一浏览器后续打开直接恢复上次项目的分析页。顶部切换同步更新项目缓存，无效或不可用的缓存回退概览；项目切换保留原有未应用修改确认，取消后不更新缓存。
 2. Before later functional milestones: first real topic/dataset, model target, schedule missed-run/concurrency policy, and real-control scope. These do not block visual exploration.
 
 ## Artifact Status
 
-The user approved the refined concept and explicitly requested style implementation. Authorized scope: Milestone 1 local NiceGUI shell, light/dark/system themes, three project selectors, navigable module previews and a synthetic analysis topic. Later live data, training and scheduling milestones remain unapproved. The prototype opens the selected topic as its review surface; production startup behavior remains deferred.
+The user approved the refined concept and explicitly requested style implementation. Authorized scope: Milestone 1 local NiceGUI shell, light/dark/system themes, three project selectors, navigable module previews and a synthetic analysis topic. Later live data, training and scheduling milestones remain unapproved. 用户追加授权项目概览选择入口和最近项目缓存，并明确后续直接恢复上次项目分析页。验收覆盖首次概览、卡片进入、刷新恢复、顶部切换、取消切换不改缓存和缓存异常降级；仅保存项目 ID，不持久化筛选、参数或运行记录。

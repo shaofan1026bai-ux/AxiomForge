@@ -1,6 +1,14 @@
 # Proposed Implementation Plan
 
-Status: Milestone 1 style implementation was explicitly authorized and is complete. The prototype opens the selected topic for review. Production startup behavior and feature-specific choices remain deferred; later milestones are not activated.
+Status: Milestone 1 style implementation was explicitly authorized and is complete. 用户于 2026-11-04 追加授权项目概览入口与最近项目缓存：首次概览选择，之后恢复上次项目分析页。后续现场接入等里程碑尚未启动。
+
+## 项目入口与缓存补充
+
+- [x] 未选择项目时展示概览，为各项目增加进入按钮。
+- [x] 概览和顶部切换复用确认、项目设备重置与偏好保存逻辑。
+- [x] 从浏览器本地存储校验并恢复项目 ID，缓存缺失或异常时回退概览。
+- [x] 代码检查与 5 项现有测试通过；浏览器验证首次概览、图书馆卡片进入与刷新恢复、参数草稿取消切换后缓存不变、顶部切换机场并刷新恢复、概览当前项目标记。
+- [ ] 未知缓存 ID、存储读写异常和不同浏览器之间的隔离尚未执行浏览器故障注入验证；实现已包含校验与异常捕获。
 
 ## 1. Local Shell and Read-only Demo
 
