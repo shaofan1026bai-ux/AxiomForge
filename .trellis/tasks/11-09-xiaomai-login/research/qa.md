@@ -7,3 +7,5 @@
 浏览器真实8081首页自动进入/login，布局保存login-default/login-562截图；桌面1440×1024通过独立8082进程使用同一代码与原生表单、临时认证桩qa-user验证成功/失败、专题导航、账号与退出。退出后其他已开页事件无法继续操作，刷新回登录；未向该验收服务配置现场凭据或查询现场数据。login-desktop截图为相同登录模板1440布局。
 
 部署服务更新、HTTPS及最终公网验收后补充。依据官方NiceGUI security文档与本机3.19源码，未整体公开/_nicegui，也未以client_id本身当身份凭证。
+
+服务器正式版本d2ad455已生效，候选停用，旧版本和SQLite备份保留。真实候选平台登录及最终公网HTTPS80完整登录、SecureCookie、合法WebSocket/ack、退出及旧Cookie重用保护全部通过；不会把WebSocket仅升级101当作业务事件验证。服务器登录页已由IAB打开，无证书警告，截图server-login-port80。保持80通过HTTP/TLS协议分流完成，443不再使用。证书续期timer active、原HTTP业务200、PROXY非白名单403。详见docs/operations/deployment.md。

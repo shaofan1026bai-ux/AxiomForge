@@ -13,3 +13,5 @@ main安装鉴权并注册GET/POST登录/退出，根页面绑定请求会话，�
 ## 既有服务器更新
 
 沿用/opt/axiomforge/releases/<commit>及current软链接、axiomforge.service、127.0.0.1:18081。原配置保留于/etc/axiomforge，SQLite保留/var/lib/axiomforge。先构建新release再原子切换，失败回滚软链接；旧release保留。Nginx原IP站点仅对既有来源放行；通过IP可信证书HTTPS保护登录，保留/charts/、/plc-points/。证书与更新工具隔离既有站点，续期自动化及真实TLS验证另记录。
+
+用户要求保留80后，采用Nginx既有stream ssl_preread分流HTTP与TLS到loopback18083/18443；使用PROXY protocol+realip保持白名单。工作台HTTP跳https://IP:80，其他HTTP业务和ACME保留。不使用443，证书可信校验、续期、匿名拦截及真实Socket链路均通过。
