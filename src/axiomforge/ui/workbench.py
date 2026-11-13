@@ -23,6 +23,7 @@ from axiomforge.demo import (
     export_csv,
     generate_samples,
 )
+from axiomforge.ui.ahu_co2 import AhuCo2View
 from axiomforge.ui.ahu_temperature import AhuTemperatureView
 from axiomforge.ui.algorithm_flowcharts import AlgorithmFlowchartsView
 from axiomforge.ui.charts import chart_options
@@ -83,6 +84,7 @@ class Workbench:
         self.flight_view = FlightView()
         self.power_view = PowerTemperatureView()
         self.ahu_view = AhuTemperatureView()
+        self.ahu_co2_view = AhuCo2View()
         self.energy_view = EnergyShareView()
         self.flowchart_view = AlgorithmFlowchartsView()
 
@@ -194,6 +196,17 @@ class Workbench:
                     .classes("nav-item")
                 )
                 self.nav_buttons["ahu-temperature"].set_visibility(False)
+                self.nav_buttons["ahu-co2"] = (
+                    ui.button(
+                        "AHU 二氧化碳与启停",
+                        icon="air",
+                        color=None,
+                        on_click=lambda: self.navigate("ahu-co2"),
+                    )
+                    .props("flat no-caps")
+                    .classes("nav-item")
+                )
+                self.nav_buttons["ahu-co2"].set_visibility(False)
                 self.nav_buttons["daily-energy-share"] = (
                     ui.button(
                         "每日用电占比",
@@ -267,6 +280,8 @@ class Workbench:
             self.power_view.set_theme(self.dark)
         if self.project_id == "hangxin-airport" and self.section == "ahu-temperature":
             self.ahu_view.set_theme(self.dark)
+        if self.project_id == "hangxin-airport" and self.section == "ahu-co2":
+            self.ahu_co2_view.set_theme(self.dark)
         if self.project_id == "hangxin-airport" and self.section == "daily-energy-share":
             self.energy_view.set_theme(self.dark)
         if self.section == "algorithms":
@@ -303,6 +318,8 @@ class Workbench:
                     or self.power_view.loading
                     or self.ahu_view.dirty
                     or self.ahu_view.loading
+                    or self.ahu_co2_view.dirty
+                    or self.ahu_co2_view.loading
                     or self.energy_view.dirty
                     or self.energy_view.loading
                 )
@@ -336,12 +353,14 @@ class Workbench:
         if self.project_id == "hangxin-airport":
             self.power_view.discard_draft()
             self.ahu_view.discard_draft()
+            self.ahu_co2_view.discard_draft()
             self.energy_view.discard_draft()
         self.project_id = project_id
         has_topics = project_id == "hangxin-airport"
         self.nav_buttons["topic"].set_visibility(has_topics)
         self.nav_buttons["flights"].set_visibility(has_topics)
         self.nav_buttons["ahu-temperature"].set_visibility(has_topics)
+        self.nav_buttons["ahu-co2"].set_visibility(has_topics)
         self.nav_buttons["daily-energy-share"].set_visibility(has_topics)
         self.topic_divider.set_visibility(has_topics)
         self.topic_caption.set_visibility(has_topics)
@@ -382,7 +401,7 @@ class Workbench:
         ):
             return
         if (
-            section in {"topic", "flights", "ahu-temperature", "daily-energy-share"}
+            section in {"topic", "flights", "ahu-temperature", "ahu-co2", "daily-energy-share"}
             and self.project_id != "hangxin-airport"
         ):
             section = "overview"
@@ -399,12 +418,13 @@ class Workbench:
     def render(self) -> None:
         real_power = self.project_id == "hangxin-airport" and self.section in {"topic", "data"}
         real_ahu = self.project_id == "hangxin-airport" and self.section == "ahu-temperature"
+        real_co2 = self.project_id == "hangxin-airport" and self.section == "ahu-co2"
         real_energy = self.project_id == "hangxin-airport" and self.section == "daily-energy-share"
         self.environment_label.set_text(
             "航班只读"
             if self.section == "flights"
             else "小麦只读"
-            if real_power or real_ahu or real_energy
+            if real_power or real_ahu or real_co2 or real_energy
             else "本地图示"
             if self.section == "algorithms"
             else "演示环境"
@@ -412,6 +432,7 @@ class Workbench:
         self.flight_view.deactivate()
         self.power_view.deactivate()
         self.ahu_view.deactivate()
+        self.ahu_co2_view.deactivate()
         self.energy_view.deactivate()
         self.flowchart_view.deactivate()
         self.charts.clear()
@@ -425,6 +446,8 @@ class Workbench:
                 self.energy_view.build(self.dark)
             elif real_ahu:
                 self.ahu_view.build(self.dark)
+            elif real_co2:
+                self.ahu_co2_view.build(self.dark)
             elif self.section in ("topic", "data"):
                 if real_power:
                     self.power_view.build(self.dark)
@@ -766,6 +789,7 @@ async def create_page(request: Request) -> RedirectResponse | None:
         # 撤销所有已打开页，后台查询只能退出，不能发布迟到数据。
         workbench.power_view.deactivate()
         workbench.ahu_view.deactivate()
+        workbench.ahu_co2_view.deactivate()
         workbench.energy_view.deactivate()
         workbench.flowchart_view.deactivate()
         workbench.flight_view.deactivate()
@@ -782,6 +806,8 @@ async def create_page(request: Request) -> RedirectResponse | None:
     ui.context.client.on_connect(workbench.power_view.reconnect)
     ui.context.client.on_disconnect(workbench.ahu_view.deactivate)
     ui.context.client.on_connect(workbench.ahu_view.reconnect)
+    ui.context.client.on_disconnect(workbench.ahu_co2_view.deactivate)
+    ui.context.client.on_connect(workbench.ahu_co2_view.reconnect)
     ui.context.client.on_disconnect(workbench.energy_view.deactivate)
     ui.context.client.on_connect(workbench.energy_view.reconnect)
     ui.context.client.on_disconnect(workbench.flowchart_view.deactivate)

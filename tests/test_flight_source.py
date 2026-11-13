@@ -41,6 +41,7 @@ def test_read_only_query_and_safe_error(monkeypatch: pytest.MonkeyPatch) -> None
 
         def query(self, sql: str, values: dict[str, Any]) -> list[Any]:
             seen.update(sql=sql, values=values)
+            seen["calls"] = seen.get("calls", 0) + 1
             return []
 
     monkeypatch.setattr(flight_source, "Surreal", Database)
@@ -53,6 +54,15 @@ def test_read_only_query_and_safe_error(monkeypatch: pytest.MonkeyPatch) -> None
         "dates": ["2026-11-03 00:00:00", "2026-11-04 00:00:00", "2026-11-05 00:00:00"],
     }
     assert seen["auth"]["database"] == "flights"
+
+    result = flight_source.load_flights_range(date(2026, 11, 4), date(2026, 11, 6))
+    assert result.flights == ()
+    assert seen["calls"] == 2
+    assert seen["sql"] == flight_source.FLIGHT_SQL
+    assert seen["values"] == {
+        "airport": "LUM",
+        "dates": [f"2026-11-{day:02d} 00:00:00" for day in range(3, 8)],
+    }
 
     def fail(*args: Any) -> Any:
         raise RuntimeError("hidden password https://private.invalid")

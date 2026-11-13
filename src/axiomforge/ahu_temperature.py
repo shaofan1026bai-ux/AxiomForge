@@ -402,9 +402,10 @@ def _finite(value: object) -> TypeGuard[int | float]:
     return isinstance(value, (int, float)) and not isinstance(value, bool) and math.isfinite(value)
 
 
-def _series(
+def normalize_series(
     records: Sequence[Mapping[str, object]], query: Query
 ) -> tuple[dict[datetime, tuple[float | None, str]], dict[str, int]]:
+    """按查询网格规范化单个测点，保留缺测、无效和冲突的质量状态。"""
     result: dict[datetime, tuple[float | None, str]] = {}
     counts = dict.fromkeys(("duplicates", "conflicts", "outside", "invalid_times", "off_grid"), 0)
     compatible = 0
@@ -509,7 +510,7 @@ def normalize(
             dict.fromkeys(("duplicates", "conflicts", "outside", "invalid_times", "off_grid"), 0),
         )
         for point in spec.points:
-            values, counts = _series(series.get(point.point_id, ()), query)
+            values, counts = normalize_series(series.get(point.point_id, ()), query)
             fields[point.field] = values
             for key, value in counts.items():
                 counters[key] += value

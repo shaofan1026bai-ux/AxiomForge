@@ -7,6 +7,7 @@
 ## 2. 签名
 
 - `load_flights(day: date) -> FlightSnapshot`
+- `load_flights_range(start_day: date, end_day: date) -> FlightSnapshot`
 - `normalize_flights(rows, fetched_at) -> FlightSnapshot`
 - `flight_gaps(flights, day, mode, minimum) -> list[FlightGap]`
 - `axiomforge --flight-env-file PATH`
@@ -14,7 +15,7 @@
 
 ## 3. 契约
 
-`AXIOMFORGE_FLIGHT_ENV_FILE`或启动参数指定外部文件；`SURREALDB_*`环境值优先。关闭dotenv插值，不提交配置、不打印凭据。SQL只读、参数绑定本场和三个计划日，无ts或limit裁剪。日期字符串格式来自实库验证。
+`AXIOMFORGE_FLIGHT_ENV_FILE`或启动参数指定外部文件；`SURREALDB_*`环境值优先。关闭dotenv插值，不提交配置、不打印凭据。SQL只读、参数绑定本场和计划日期范围，无ts或limit裁剪。单日和范围查询共用固定SQL，一次读取含起止日及首尾各一个邻日的计划航班。日期字符串格式来自实库验证。
 
 启动其他真实专题时仍须保留航班配置：`--xiaomai-env-file`与`--flight-env-file`是独立入口，不能互相替代。预览服务重启或交付启动文件时必须合并已启用数据源的参数，并实查各入口；只验证新专题会遗漏既有专题的运行配置。
 

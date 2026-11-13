@@ -12,6 +12,7 @@ from surrealdb import Surreal
 from axiomforge.flights import AIRPORT, SHANGHAI, FlightSnapshot, normalize_flights
 
 FLIGHT_SQL = "SELECT * FROM flight WHERE airptIataCd = $airport AND planDate IN $dates;"
+MAX_FLIGHT_RANGE_DAYS = 31
 
 
 class FlightSourceError(ValueError):
@@ -20,6 +21,18 @@ class FlightSourceError(ValueError):
 
 def load_flights(day: date) -> FlightSnapshot:
     """固定查询本场与相邻计划日，所有用户输入均绑定为参数。"""
+    return load_flights_range(day, day)
+
+
+def load_flights_range(start_day: date, end_day: date) -> FlightSnapshot:
+    """一次查询本场日期范围与首尾相邻计划日，保留跨午夜航班。"""
+    if start_day <= date.min or end_day >= date.max or start_day > end_day:
+        raise FlightSourceError("请选择有效的航班日期范围。")
+    days = (end_day - start_day).days + 1
+    if days > MAX_FLIGHT_RANGE_DAYS:
+        raise FlightSourceError(f"航班查询范围最多 {MAX_FLIGHT_RANGE_DAYS} 天。")
+    dates = [(start_day + timedelta(days=n)).isoformat() + " 00:00:00" for n in range(-1, days + 1)]
+
     path = os.environ.get("AXIOMFORGE_FLIGHT_ENV_FILE", "")
     if path and not Path(path).expanduser().is_file():
         raise FlightSourceError("航班连接配置文件不可读，请检查服务启动配置。")
@@ -45,7 +58,6 @@ def load_flights(day: date) -> FlightSnapshot:
         raise FlightSourceError("航班账号与密码需同时配置。")
     if not username and not token:
         raise FlightSourceError("航班数据源缺少认证配置。")
-    dates = [(day + timedelta(days=n)).isoformat() + " 00:00:00" for n in (-1, 0, 1)]
     try:
         with Surreal(settings["SURREALDB_URL"].strip().rstrip("/")) as db:
             if username:

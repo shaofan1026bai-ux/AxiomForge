@@ -10,6 +10,8 @@ Applies to `src/axiomforge/main.py`, `ui/`, and `demo.py`. The current app is a 
 
 航信新增“AHU回风温度”，路由`ahu-temperature`，采用独立`AhuTemperatureView`。修改前阅读[AHU前端合同](ahu-temperature.md)与[领域合同](../backend/ahu-temperature.md)。仅航信可进入，工作台切项目确认纳入其dirty/loading，断开／离页使请求失效；恢复查询偏好不自动取数。
 
+航信“AHU 二氧化碳与启停”使用 `ahu-co2` 和 `AhuCo2View`。日期范围手动提交，默认最近七个完整日并查询五台设备。观察线、设备和日期明细、曲线及事件选择用当前快照处理。加载或草稿纳入切项目确认，离页、断线及注销使迟到结果失效。所选事件的温度、状态和浓度时间依 [事件与来源契约](../backend/ahu-co2.md) 展示。
+
 ## 2. Signatures
 
 - Startup: `uv run axiomforge [--port PORT]`, default loopback `127.0.0.1:8080`.

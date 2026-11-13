@@ -1,0 +1,61 @@
+.ahu-co2-page, .ahu-co2-results, .ahu-co2-day-content { width: 100%; min-width: 0; gap: 0; }
+.ahu-co2-toolbar { width: 100%; gap: 10px; align-items: center; margin: 18px 0 6px; }
+.ahu-co2-device { width: 116px; }
+.ahu-co2-date { width: 168px; }
+.ahu-co2-threshold { width: 160px; }
+.ahu-co2-status { width: 100%; gap: 5px; margin: 2px 0 14px; }
+.ahu-co2-status .q-linear-progress { max-width: 480px; }
+.ahu-co2-warning { color: var(--accent); font-size: 13px; line-height: 1.65; }
+.ahu-co2-scope { width: 100%; align-items: baseline; gap: 7px 16px; margin-bottom: 10px; }
+.ahu-co2-title { font-size: 15px; font-weight: 650; }
+.ahu-co2-detail { display: grid; grid-template-columns: minmax(0, 1fr) minmax(250px, .42fr); gap: 14px; width: 100%; }
+.ahu-co2-panel {
+  min-width: 0; gap: 7px; padding: 14px 15px;
+  border: 1px solid var(--line); background: var(--surface); border-radius: 7px;
+}
+.ahu-co2-panel-heading { width: 100%; justify-content: space-between; align-items: center; gap: 7px 12px; }
+.ahu-co2-metric { width: 132px; }
+.ahu-co2-chart { height: 494px; width: 100%; }
+.ahu-co2-distribution { height: 252px; width: 100%; }
+.ahu-co2-section { width: 100%; margin-bottom: 14px; }
+.ahu-co2-daily { margin: 6px 0 10px; }
+.ahu-co2-daily, .ahu-co2-comparison { scroll-margin-top: 82px; }
+.ahu-co2-filters { max-width: 100%; align-items: center; gap: 8px; }
+.ahu-co2-filter { width: 148px; }
+.ahu-co2-flight-note { color: var(--accent); font-size: 12px; }
+.ahu-co2-reading {
+  width: 100%; margin: 6px 0; gap: 1px; padding: 12px;
+  background: var(--soft); border-radius: 6px;
+}
+.ahu-co2-value { font-size: 28px; line-height: 1.25; font-weight: 700; letter-spacing: -.5px; font-variant-numeric: tabular-nums; }
+.ahu-co2-facts { width: 100%; margin: 0 0 3px; font-size: 12px; }
+.ahu-co2-facts > div {
+  display: flex; justify-content: space-between; align-items: baseline;
+  gap: 8px; padding: 7px 0; border-bottom: 1px solid var(--line);
+}
+.ahu-co2-facts dt { color: var(--muted); }
+.ahu-co2-facts dd { margin: 0; text-align: right; font-variant-numeric: tabular-nums; }
+.ahu-co2-tag { padding: 3px 6px; border-radius: 4px; font-size: 11px; font-weight: 600; white-space: nowrap; }
+.ahu-co2-tag.start { color: var(--success); background: color-mix(in srgb, var(--success) 12%, transparent); }
+.ahu-co2-tag.high_stopped { color: #805419; background: #fbf1db; }
+html[data-theme="dark"] .ahu-co2-tag.high_stopped { color: #f0c474; background: #392f23; }
+.ahu-co2-table { width: 100%; min-width: 0; }
+.ahu-co2-table .q-table__middle { overflow-x: auto; }
+.ahu-co2-table .q-table td { font-variant-numeric: tabular-nums; }
+.q-btn.ahu-co2-event-button { color: var(--accent); }
+.q-btn.ahu-co2-event-button.active { color: var(--selected-text); background: var(--selected); }
+.ahu-co2-empty { margin-top: 0; }
+.ahu-co2-sources {
+  width: 100%; margin-top: 14px; border: 1px solid var(--line);
+  background: var(--surface); border-radius: 7px;
+}
+.ahu-co2-sources .q-expansion-item__content { padding: 0 15px 12px; }
+.ahu-co2-source-row { width: 100%; justify-content: space-between; gap: 3px 12px; padding: 5px 0; }
+.ahu-co2-point-id { color: var(--muted); font: 12px ui-monospace, monospace; overflow-wrap: anywhere; }
+@media (max-width: 1000px) {
+  .ahu-co2-detail { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 480px) {
+  .ahu-co2-toolbar { align-items: flex-start; }
+  .ahu-co2-panel { padding: 11px 10px; }
+}

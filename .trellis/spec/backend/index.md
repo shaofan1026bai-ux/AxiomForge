@@ -17,6 +17,7 @@ This directory contains guidelines for backend development. Fill in each file wi
 | [航班只读契约](./flights.md) | SurrealDB字段、时间口径、空档计算与凭据边界 | Implemented |
 | [功率与温度只读契约](./power-temperature.md) | 小麦认证、测点校验、历史网格、统计及导出 | Implemented |
 | [AHU回风温度合同](./ahu-temperature.md) | 每日窗口、运行配对、分位数、质量与只读源 | Implemented |
+| [AHU 二氧化碳与启停](./ahu-co2.md) | 同设备点位、开机与高值停机、航班参考窗 | 已实现 |
 | [每日用电占比](./energy-share.md) | 每日用电领域与数据源 | Implemented |
 | [算法流程图](./algorithm-flowcharts.md) | 图示版本、项目隔离、SQLite与SVG边界 | 已实现并验证 |
 | [登录与准入](./authentication.md) | 小麦身份、会话与HTTP／Socket边界 | 已实现 |
