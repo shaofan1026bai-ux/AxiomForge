@@ -30,6 +30,7 @@ from axiomforge.ui.charts import chart_options
 from axiomforge.ui.energy_share import EnergyShareView
 from axiomforge.ui.flights import FlightView
 from axiomforge.ui.power_temperature import PowerTemperatureView
+from axiomforge.ui.region_climate import RegionClimateView
 
 NAVIGATION = (
     ("overview", "项目概览", "home"),
@@ -85,6 +86,7 @@ class Workbench:
         self.power_view = PowerTemperatureView()
         self.ahu_view = AhuTemperatureView()
         self.ahu_co2_view = AhuCo2View()
+        self.region_climate_view = RegionClimateView()
         self.energy_view = EnergyShareView()
         self.flowchart_view = AlgorithmFlowchartsView()
 
@@ -207,6 +209,17 @@ class Workbench:
                     .classes("nav-item")
                 )
                 self.nav_buttons["ahu-co2"].set_visibility(False)
+                self.nav_buttons["region-climate"] = (
+                    ui.button(
+                        "区域温湿度",
+                        icon="device_thermostat",
+                        color=None,
+                        on_click=lambda: self.navigate("region-climate"),
+                    )
+                    .props("flat no-caps")
+                    .classes("nav-item")
+                )
+                self.nav_buttons["region-climate"].set_visibility(False)
                 self.nav_buttons["daily-energy-share"] = (
                     ui.button(
                         "每日用电占比",
@@ -282,6 +295,8 @@ class Workbench:
             self.ahu_view.set_theme(self.dark)
         if self.project_id == "hangxin-airport" and self.section == "ahu-co2":
             self.ahu_co2_view.set_theme(self.dark)
+        if self.project_id == "hangxin-airport" and self.section == "region-climate":
+            self.region_climate_view.set_theme(self.dark)
         if self.project_id == "hangxin-airport" and self.section == "daily-energy-share":
             self.energy_view.set_theme(self.dark)
         if self.section == "algorithms":
@@ -320,6 +335,8 @@ class Workbench:
                     or self.ahu_view.loading
                     or self.ahu_co2_view.dirty
                     or self.ahu_co2_view.loading
+                    or self.region_climate_view.dirty
+                    or self.region_climate_view.loading
                     or self.energy_view.dirty
                     or self.energy_view.loading
                 )
@@ -354,6 +371,7 @@ class Workbench:
             self.power_view.discard_draft()
             self.ahu_view.discard_draft()
             self.ahu_co2_view.discard_draft()
+            self.region_climate_view.discard_draft()
             self.energy_view.discard_draft()
         self.project_id = project_id
         has_topics = project_id == "hangxin-airport"
@@ -361,6 +379,7 @@ class Workbench:
         self.nav_buttons["flights"].set_visibility(has_topics)
         self.nav_buttons["ahu-temperature"].set_visibility(has_topics)
         self.nav_buttons["ahu-co2"].set_visibility(has_topics)
+        self.nav_buttons["region-climate"].set_visibility(has_topics)
         self.nav_buttons["daily-energy-share"].set_visibility(has_topics)
         self.topic_divider.set_visibility(has_topics)
         self.topic_caption.set_visibility(has_topics)
@@ -401,7 +420,15 @@ class Workbench:
         ):
             return
         if (
-            section in {"topic", "flights", "ahu-temperature", "ahu-co2", "daily-energy-share"}
+            section
+            in {
+                "topic",
+                "flights",
+                "ahu-temperature",
+                "ahu-co2",
+                "region-climate",
+                "daily-energy-share",
+            }
             and self.project_id != "hangxin-airport"
         ):
             section = "overview"
@@ -419,12 +446,13 @@ class Workbench:
         real_power = self.project_id == "hangxin-airport" and self.section in {"topic", "data"}
         real_ahu = self.project_id == "hangxin-airport" and self.section == "ahu-temperature"
         real_co2 = self.project_id == "hangxin-airport" and self.section == "ahu-co2"
+        real_climate = self.project_id == "hangxin-airport" and self.section == "region-climate"
         real_energy = self.project_id == "hangxin-airport" and self.section == "daily-energy-share"
         self.environment_label.set_text(
             "航班只读"
             if self.section == "flights"
             else "小麦只读"
-            if real_power or real_ahu or real_co2 or real_energy
+            if real_power or real_ahu or real_co2 or real_climate or real_energy
             else "本地图示"
             if self.section == "algorithms"
             else "演示环境"
@@ -433,6 +461,7 @@ class Workbench:
         self.power_view.deactivate()
         self.ahu_view.deactivate()
         self.ahu_co2_view.deactivate()
+        self.region_climate_view.deactivate()
         self.energy_view.deactivate()
         self.flowchart_view.deactivate()
         self.charts.clear()
@@ -448,6 +477,8 @@ class Workbench:
                 self.ahu_view.build(self.dark)
             elif real_co2:
                 self.ahu_co2_view.build(self.dark)
+            elif real_climate:
+                self.region_climate_view.build(self.dark)
             elif self.section in ("topic", "data"):
                 if real_power:
                     self.power_view.build(self.dark)
@@ -477,6 +508,8 @@ class Workbench:
                     if real_power
                     else "AHU 回风温度为只读统计；缺测不补值，样本占比不代表精确时长。"
                     if real_ahu
+                    else "区域温湿度来自小麦只读历史。"
+                    if real_climate
                     else "八项电表只读统计；缺测日占比留空，已知小计不代表八项总量。"
                     if real_energy
                     else "流程图用于逻辑说明；图示版本独立保存，不执行设备控制。"
@@ -790,6 +823,7 @@ async def create_page(request: Request) -> RedirectResponse | None:
         workbench.power_view.deactivate()
         workbench.ahu_view.deactivate()
         workbench.ahu_co2_view.deactivate()
+        workbench.region_climate_view.deactivate()
         workbench.energy_view.deactivate()
         workbench.flowchart_view.deactivate()
         workbench.flight_view.deactivate()
@@ -808,6 +842,8 @@ async def create_page(request: Request) -> RedirectResponse | None:
     ui.context.client.on_connect(workbench.ahu_view.reconnect)
     ui.context.client.on_disconnect(workbench.ahu_co2_view.deactivate)
     ui.context.client.on_connect(workbench.ahu_co2_view.reconnect)
+    ui.context.client.on_disconnect(workbench.region_climate_view.deactivate)
+    ui.context.client.on_connect(workbench.region_climate_view.reconnect)
     ui.context.client.on_disconnect(workbench.energy_view.deactivate)
     ui.context.client.on_connect(workbench.energy_view.reconnect)
     ui.context.client.on_disconnect(workbench.flowchart_view.deactivate)

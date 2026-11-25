@@ -1,6 +1,7 @@
 """AHU统计图只读取成功快照；显示范围与温区分母不受图例影响。"""
 
 import json
+from collections.abc import Sequence
 from typing import Any
 
 from axiomforge.ahu_temperature import BINS, DeviceResult, Snapshot
@@ -108,49 +109,97 @@ def range_options(snapshot: Snapshot, dark: bool, running: bool = True) -> dict[
 
 
 def distribution_options(snapshot: Snapshot, dark: bool, running: bool = True) -> dict[str, Any]:
-    colors = (
-        ["#8cb5d3", "#69b8c2", "#71c6a1", "#a3cc83", "#d4c67b", "#d6a07c", "#d78f9b"]
-        if dark
-        else ["#5984a3", "#398e9b", "#449b78", "#709e49", "#ae943b", "#ba7548", "#b65e72"]
+    return temperature_distribution_options(
+        [
+            (device.spec.id, (device.running_stats if running else device.all_stats).bins)
+            for device in snapshot.devices
+        ],
+        dark,
     )
-    series = []
-    for index, bucket in enumerate(BINS):
-        points = []
-        for device in snapshot.devices:
-            stats = device.running_stats if running else device.all_stats
-            points.append(
+
+
+def temperature_bin_colors(dark: bool) -> tuple[str, ...]:
+    """占比条形图与温区时间图共用七档配色。"""
+    return (
+        ("#8cb5d3", "#69b8c2", "#71c6a1", "#a3cc83", "#d4c67b", "#d6a07c", "#d78f9b")
+        if dark
+        else ("#5984a3", "#398e9b", "#449b78", "#709e49", "#ae943b", "#ba7548", "#b65e72")
+    )
+
+
+def temperature_distribution_options(
+    rows: Sequence[tuple[str, tuple[int, ...]]], dark: bool, *, show_missing: bool = False
+) -> dict[str, Any]:
+    """沿用回风温区配色，每行按自身有效采样总数计算百分比。"""
+    colors = temperature_bin_colors(dark)
+    totals = [sum(counts) for _, counts in rows]
+    series = [
+        {
+            "name": bucket.name,
+            "type": "bar",
+            "stack": "temperature-bins",
+            "barMaxWidth": 30,
+            "itemStyle": {"color": colors[index]},
+            "data": [
                 {
-                    "value": stats.bins[index] / stats.count * 100 if stats.count else None,
-                    "count": stats.bins[index],
-                    "total": stats.count,
+                    "value": counts[index] / total * 100 if total else None,
+                    "count": counts[index],
+                    "total": total,
                 }
-            )
-        series.append(
-            {
-                "name": bucket.name,
-                "type": "bar",
-                "stack": "temperature-bins",
-                "barMaxWidth": 30,
-                "itemStyle": {"color": colors[index]},
-                "data": points,
-            }
-        )
-    return {
-        **_base(dark),
-        "grid": {"left": 58, "right": 22, "top": 30, "bottom": 88},
-        "legend": {"bottom": 0, "textStyle": {"color": palette(dark)["text"]}},
-        "tooltip": {
-            **_base(dark)["tooltip"],
+                for (_, counts), total in zip(rows, totals, strict=True)
+            ],
+        }
+        for index, bucket in enumerate(BINS)
+    ]
+    axis = _axis(dark)
+    axis_label = dict(axis["axisLabel"])
+    if show_missing:
+        axis_label.update({"width": 170, "overflow": "truncate", "margin": 10})
+    tooltip = (
+        {
+            "trigger": "axis",
+            "axisPointer": {"type": "shadow"},
+            "confine": True,
+            ":formatter": """items => {
+              if (!items.length) return '';
+              const first = items[0];
+              const safe = text => String(text).replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;').replace(/>/g, '&gt;');
+              const total = first.data.total;
+              const header = safe(first.name) + '<br>' + (total
+                ? '有效采样 ' + total + ' 个' : '无有效采样');
+              if (!total) return header;
+              return [header, ...items.map(item => item.marker + safe(item.seriesName)
+                + ' ' + Number(item.value).toFixed(1) + '% · ' + item.data.count + ' 个')]
+                .join('<br>');
+            }""",
+        }
+        if show_missing
+        else {
             ":formatter": """p => p.name+' · '+p.seriesName+'<br>'
               +(p.data.total ? Number(p.value).toFixed(1)+'% · '+p.data.count+'/'+p.data.total
               +' 个有效采样' : '无有效采样')""",
-        },
-        "xAxis": {**_axis(dark), "type": "value", "max": 100, "name": "%"},
+        }
+    )
+    grid: dict[str, Any] = {"left": 58, "right": 22, "top": 30, "bottom": 88}
+    legend = {"bottom": 0, "textStyle": {"color": palette(dark)["text"]}}
+    share_axis = {**axis, "type": "value", "max": 100, "name": "%"}
+    if show_missing:
+        grid.update({"left": 6, "right": 34, "top": 12, "containLabel": True})
+        legend["selectedMode"] = False
+        share_axis.update({"min": 0, "interval": 20})
+    return {
+        **_base(dark),
+        "grid": grid,
+        "legend": legend,
+        "tooltip": {**_base(dark)["tooltip"], **tooltip},
+        "xAxis": share_axis,
         "yAxis": {
-            **_axis(dark),
+            **axis,
+            "axisLabel": axis_label,
             "type": "category",
             "inverse": True,
-            "data": [device.spec.id for device in snapshot.devices],
+            "data": [label for label, _ in rows],
             "splitLine": {"show": False},
         },
         "series": series,

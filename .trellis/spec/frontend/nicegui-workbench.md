@@ -12,6 +12,10 @@ Applies to `src/axiomforge/main.py`, `ui/`, and `demo.py`. The current app is a 
 
 航信“AHU 二氧化碳与启停”使用 `ahu-co2` 和 `AhuCo2View`。日期范围手动提交，默认最近七个完整日并查询五台设备。观察线、设备和日期明细、曲线及事件选择用当前快照处理。加载或草稿纳入切项目确认，离页、断线及注销使迟到结果失效。所选事件的温度、状态和浓度时间依 [事件与来源契约](../backend/ahu-co2.md) 展示。
 
+航信“区域温湿度”使用 `region-climate` 和 `RegionClimateView`。日期由用户手动提交，一次查询覆盖七区。区域、探头、开机事件及温度观察线只用成功快照更新。切项目确认包括该页日期草稿与查询中状态，离页、断线及注销须使迟到结果失效。区域曲线、覆盖数与事件范围遵守[区域温湿度合同](../backend/region-climate.md)。
+
+区域温区分布默认按时间显示七区方格及当前区域探头方格，共用显示方式和分钟粒度。点击区域图中方格可切换探头明细，选择全天占比可查看原温区百分比。图表切换及缩放只读当前成功快照。
+
 ## 2. Signatures
 
 - Startup: `uv run axiomforge [--port PORT]`, default loopback `127.0.0.1:8080`.
