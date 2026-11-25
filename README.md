@@ -42,6 +42,8 @@ uv run axiomforge --xiaomai-env-file /path/to/xiaomai.env
 
 配置文件包含 `XIAOMAI_ACCOUNT`、`XIAOMAI_PASSWORD` 和 `XIAOMAI_LOGIN_URL`；航信登录地址为 `https://smart-energy.yntravelsky.net.cn:36443/api/UserMicro/User/UserLogin`。也可通过 `AXIOMFORGE_XIAOMAI_ENV_FILE` 指定文件；显式进程环境优先。密码填写原始值，程序在服务端完成RSA加密，Token只在单次查询中使用。
 
+如果本机 VPN 偶发域名解析失败，可在工作台进程中设置 `AXIOMFORGE_XIAOMAI_DNS_SERVER` 为已验证可用的 DNS 服务器 IP。配置后，小麦连接从本机直连，优先使用系统解析，解析失败时用 `dig` 向指定服务器查询。备用连接继续使用小麦原域名校验证书。
+
 选择“航信机场 → 功率与温度分析”，点击“查询刷新”。默认查询今天，截至提交时刻；支持昨天和自定义，最长连续7天，固定上游2分钟数据，分段查询后统一配对。源为“1#空调机组电表—总有功功率”和“1#空调冷水机组—室外温度”。不自动轮询；快照属于当前浏览器，刷新页面需重新查询。CSV导出完整成功查询范围，不随图表选区删减；缺失值不填0，相关性不代表因果或节能空间。详见[接口说明](docs/interfaces/systems/xiaomai/README.md)。
 
 ### AHU 回风温度专题

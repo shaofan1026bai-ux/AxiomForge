@@ -24,6 +24,7 @@ from axiomforge.xiaomai_client import (
     PUBLIC_KEY,
     Settings,
     XiaomaiClient,
+    XiaomaiDnsError,
     XiaomaiSourceError,
     http_client,
 )
@@ -301,6 +302,8 @@ def authenticate_account(
             source.token = ""
     except LoginError:
         raise
+    except XiaomaiDnsError as error:
+        raise LoginError(str(error)) from None
     except httpx.TimeoutException:
         raise LoginError("小麦登录请求超时，请稍后重试。") from None
     except httpx.HTTPError:

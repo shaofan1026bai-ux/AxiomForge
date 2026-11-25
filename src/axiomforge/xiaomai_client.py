@@ -3,10 +3,13 @@
 import base64
 import json
 import os
+import socket
 import ssl
+import subprocess
 import time
 from collections.abc import Callable, Sequence
 from dataclasses import dataclass, field
+from ipaddress import IPv4Address, ip_address
 from pathlib import Path
 from typing import Any, Protocol
 from urllib.parse import urlsplit
@@ -18,6 +21,8 @@ from cryptography.hazmat.primitives.asymmetric import padding, rsa
 from dotenv import dotenv_values
 
 BASE_URL = "https://smart-energy.yntravelsky.net.cn:36443"
+_ORIGIN = httpx.URL(BASE_URL)
+_DNS_SERVER_ENV = "AXIOMFORGE_XIAOMAI_DNS_SERVER"
 LOGIN_PATH = "/api/UserMicro/User/UserLogin"
 PROJECT_PATH = "/api/UserMicro/UserSubarea/GetUserOwnProject"
 POINT_PATH = "/api/GatewayMicro/Device/GetDevicePoint"
@@ -32,6 +37,71 @@ tnBuCCvW+MEfcz23HQIDAQAB
 
 class XiaomaiSourceError(ValueError):
     """可安全显示给用户的错误；不包含原始响应或底层异常。"""
+
+
+class XiaomaiDnsError(XiaomaiSourceError):
+    """本机无法解析小麦域名，尚未连接服务。"""
+
+
+def _is_dns_error(error: BaseException) -> bool:
+    cause: BaseException | None = error
+    seen: set[int] = set()
+    while cause is not None and id(cause) not in seen:
+        seen.add(id(cause))
+        if isinstance(cause, socket.gaierror):
+            return True
+        cause = cause.__cause__ or cause.__context__
+    return False
+
+
+def _resolve_fallback(host: str, resolver: str) -> str | None:
+    try:
+        result = subprocess.run(
+            ["dig", "+short", "+time=2", "+tries=1", f"@{ip_address(resolver)}", host, "A"],
+            capture_output=True,
+            text=True,
+            timeout=3,
+            check=True,
+        )
+    except (OSError, subprocess.SubprocessError, ValueError):
+        return None
+    for line in result.stdout.splitlines():
+        try:
+            return str(IPv4Address(line.strip()))
+        except ValueError:
+            continue
+    return None
+
+
+class _XiaomaiTransport(httpx.HTTPTransport):
+    """仅在已登记源的解析失败时备用连接，保留 HTTPS 的域名校验。"""
+
+    def __init__(self, context: ssl.SSLContext, resolver: str) -> None:
+        super().__init__(verify=context)
+        self.resolver = resolver
+        self.address: str | None = None
+
+    def handle_request(self, request: httpx.Request) -> httpx.Response:
+        url = request.url
+        if (url.scheme, url.host, url.port) != (_ORIGIN.scheme, _ORIGIN.host, _ORIGIN.port):
+            return super().handle_request(request)
+        if self.address is None:
+            try:
+                return super().handle_request(request)
+            except httpx.ConnectError as error:
+                if not _is_dns_error(error):
+                    raise
+                self.address = _resolve_fallback(url.host, self.resolver)
+                if self.address is None:
+                    raise XiaomaiDnsError("本机无法解析小麦域名，请检查 VPN 或 DNS。") from None
+        fallback = httpx.Request(
+            request.method,
+            url.copy_with(host=self.address),
+            headers=request.headers,
+            stream=request.stream,
+            extensions={**request.extensions, "sni_hostname": url.host},
+        )
+        return super().handle_request(fallback)
 
 
 @dataclass(frozen=True)
@@ -130,23 +200,28 @@ class XiaomaiClient:
         if remaining <= 0:
             raise XiaomaiSourceError(f"小麦查询超过{self.seconds}秒，请稍后手动重试。")
         headers = {"Authorization": f"Bearer {self.token}"} if authenticated else {}
-        with self.client.stream(
-            "POST", BASE_URL + path, json=body, headers=headers, timeout=min(15, remaining)
-        ) as response:
-            if response.status_code in {401, 403}:
-                raise XiaomaiSourceError("小麦认证或权限校验失败，请检查账号后手动刷新。")
-            if response.status_code != 200:
-                raise XiaomaiSourceError("小麦服务请求失败，原快照已保留。")
-            content = bytearray()
-            for chunk in response.iter_bytes():
-                self.check_deadline()
-                content.extend(chunk)
-                if len(content) > 4_000_000:
-                    raise XiaomaiSourceError("小麦单段响应超出预期，请缩小时间范围。")
-            payload = _mapping(json.loads(content))
-            if payload.get("success") is not True or payload.get("code") != 200:
-                raise XiaomaiSourceError("小麦业务查询未成功，请检查账号和接口状态。")
-            return payload, response.headers
+        try:
+            with self.client.stream(
+                "POST", BASE_URL + path, json=body, headers=headers, timeout=min(15, remaining)
+            ) as response:
+                if response.status_code in {401, 403}:
+                    raise XiaomaiSourceError("小麦认证或权限校验失败，请检查账号后手动刷新。")
+                if response.status_code != 200:
+                    raise XiaomaiSourceError("小麦服务请求失败，原快照已保留。")
+                content = bytearray()
+                for chunk in response.iter_bytes():
+                    self.check_deadline()
+                    content.extend(chunk)
+                    if len(content) > 4_000_000:
+                        raise XiaomaiSourceError("小麦单段响应超出预期，请缩小时间范围。")
+                payload = _mapping(json.loads(content))
+                if payload.get("success") is not True or payload.get("code") != 200:
+                    raise XiaomaiSourceError("小麦业务查询未成功，请检查账号和接口状态。")
+                return payload, response.headers
+        except httpx.ConnectError as error:
+            if _is_dns_error(error):
+                raise XiaomaiDnsError("本机无法解析小麦域名，请检查 VPN 或 DNS。") from None
+            raise
 
     def authenticate(self, settings: Settings, project_id: int) -> None:
         login, headers = self.post(
@@ -239,4 +314,8 @@ class XiaomaiClient:
 
 def http_client(transport: httpx.BaseTransport | None = None) -> httpx.Client:
     context = truststore.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
-    return httpx.Client(verify=context, transport=transport, follow_redirects=False)
+    resolver = os.environ.get(_DNS_SERVER_ENV, "").strip()
+    mounts: dict[str, httpx.BaseTransport] = {}
+    if transport is None and resolver:
+        mounts[BASE_URL] = _XiaomaiTransport(context, resolver)
+    return httpx.Client(verify=context, transport=transport, mounts=mounts, follow_redirects=False)
