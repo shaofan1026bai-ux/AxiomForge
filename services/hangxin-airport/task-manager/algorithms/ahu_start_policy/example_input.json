@@ -1,0 +1,53 @@
+{
+  "at": "2026-11-10T12:00:00+08:00",
+  "ahus": [
+    {
+      "ahu_id": "AHU1",
+      "occupied": {
+        "value": true,
+        "updated_at": "2026-11-10T12:00:00+08:00"
+      },
+      "flight_support": {
+        "value": false,
+        "updated_at": "2026-11-10T12:00:00+08:00"
+      },
+      "precooling": {
+        "value": false,
+        "updated_at": "2026-11-10T12:00:00+08:00"
+      },
+      "return_temperature_c": {
+        "value": 26,
+        "updated_at": "2026-11-10T12:00:00+08:00"
+      }
+    },
+    {
+      "ahu_id": "AHU2",
+      "occupied": {
+        "value": true,
+        "updated_at": "2026-11-10T12:00:00+08:00"
+      },
+      "flight_support": {
+        "value": false,
+        "updated_at": "2026-11-10T12:00:00+08:00"
+      },
+      "precooling": {
+        "value": false,
+        "updated_at": "2026-11-10T12:00:00+08:00"
+      },
+      "return_temperature_c": {
+        "value": 25.5,
+        "updated_at": "2026-11-10T12:00:00+08:00"
+      }
+    }
+  ],
+  "chillers_running": [
+    {
+      "value": false,
+      "updated_at": "2026-11-10T12:00:00+08:00"
+    },
+    {
+      "value": false,
+      "updated_at": "2026-11-10T12:00:00+08:00"
+    }
+  ]
+}

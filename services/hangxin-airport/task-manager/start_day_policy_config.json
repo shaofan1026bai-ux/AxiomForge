@@ -1,0 +1,9 @@
+{
+  "version": "start-noon-deferral-v3",
+  "final_hour": 17,
+  "defer_start_hour": 12,
+  "defer_start_minute": 0,
+  "schedule_trigger_semantics": "point_in_time_no_catch_up",
+  "confirmation_seconds": 300,
+  "maximum_final_horizon_minutes": 540
+}

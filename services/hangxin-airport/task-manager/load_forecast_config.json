@@ -1,0 +1,33 @@
+{
+  "enabled": false,
+  "base_url": "https://smart-energy.yntravelsky.net.cn:36443",
+  "login_path": "/api/UserMicro/User/UserLogin",
+  "history_path": "/api/GatewayMicro/Point/GetPointHistoryData",
+  "device_id": 12788,
+  "device_name": "1#空调冷水机组",
+  "rated_cooling_capacity_kw": 834.4,
+  "interval_minutes": 2,
+  "smoothing_alpha": 0.85,
+  "adjustment_factor": 0.985,
+  "timeout_seconds": 10,
+  "cache_directory": "forecast_cache",
+  "generation_retry_delays_minutes": [
+    5,
+    10
+  ],
+  "heads": [
+    {
+      "identifier_name": "c09",
+      "point_id": "nfdh9q_mscrk01_c09",
+      "rated_cooling_capacity_kw": 417.2
+    },
+    {
+      "identifier_name": "c10",
+      "point_id": "nfdh9q_mscrk01_c10",
+      "rated_cooling_capacity_kw": 417.2
+    }
+  ],
+  "reference_lookback_days": 7,
+  "minimum_reference_coverage": 0.95,
+  "maximum_interpolation_gap_minutes": 10
+}

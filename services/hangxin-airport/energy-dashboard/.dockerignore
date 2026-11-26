@@ -1,0 +1,7 @@
+*
+!Dockerfile.sync
+!scripts/
+!scripts/import_energy.py
+!scripts/import_region_temperature.py
+!scripts/sync_daily.py
+!scripts/sync_outdoor_temperature.py

@@ -1,0 +1,8 @@
+{
+  "version": "flight-weather-half-hour-v2",
+  "candidate_times": ["18:30", "19:00", "19:30", "20:00", "20:30"],
+  "minimum_gap_minutes": 30,
+  "outdoor_temperature_limit_c": 27,
+  "freeze_minutes": 5,
+  "confirmation_budget_minutes": 5
+}

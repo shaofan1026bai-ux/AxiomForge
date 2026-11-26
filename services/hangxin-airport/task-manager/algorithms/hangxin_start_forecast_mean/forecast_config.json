@@ -1,0 +1,43 @@
+{
+  "version": "rough-start-forecast-v5.5-supported-trend",
+  "planning_objective": "prestart_return_limit",
+  "return_aggregation": "mean",
+  "minimum_aggregate_members": 2,
+  "refresh_minutes": 30,
+  "forecast_horizon_minutes": 240,
+  "step_minutes": 5,
+  "return_limit_c": 28.5,
+  "return_reserve_c": 0.3,
+  "history_rate_quantile": 0.5,
+  "nearest_windows": 20,
+  "minimum_history_days": 3,
+  "weather_trend_cap_c_per_hour": 2.0,
+  "weather_trend_horizon_minutes": 90,
+  "startup_allowance_minutes": 10,
+  "extra_margin_minutes": 0,
+  "fan_startup_exclusion_minutes": 30,
+  "trend_window_minutes": [
+    15,
+    30,
+    60
+  ],
+  "trend_window_weights": [
+    0.6,
+    0.3,
+    0.1
+  ],
+  "minimum_trend_span_minutes": 10,
+  "max_signal_age_seconds": 180,
+  "max_sample_gap_seconds": 180,
+  "deployment_enabled": false,
+  "minimum_history_neighbors": 8,
+  "maximum_neighbor_outdoor_distance_c": 2,
+  "maximum_neighbor_return_distance_c": 3,
+  "maximum_neighbor_fresh_difference_percent": 25,
+  "maximum_neighbor_frequency_difference_hz": 10,
+  "maximum_neighbor_hour_distance": 3,
+  "trend_decay_minutes": 15,
+  "baseline_decay_minutes": 90,
+  "history_blend_minutes": 60,
+  "short_term_guard_minutes": 15
+}

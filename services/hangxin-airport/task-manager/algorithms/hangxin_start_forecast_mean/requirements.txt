@@ -1,0 +1,2 @@
+# 仅使用Python标准库，无需安装第三方算法包。
+# Python 3.10+；操作系统需提供Asia/Shanghai时区数据。

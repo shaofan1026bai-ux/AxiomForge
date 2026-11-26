@@ -1,0 +1,340 @@
+{
+  "version": "1.0.0",
+  "airport": "LUM",
+  "timezone": "Asia/Shanghai",
+  "date": "2026-11-05",
+  "mode": "planned",
+  "minimum_minutes": 30,
+  "computed_at": "2026-11-05T17:20:13.519796+08:00",
+  "raw_count": 8,
+  "selected_day_flights": 6,
+  "input_plan_days": [
+    "2026-11-04",
+    "2026-11-05",
+    "2026-11-06"
+  ],
+  "normalization_counts": {
+    "old_versions": 0,
+    "shared_aliases": 0
+  },
+  "warnings": [
+    "存在国内／国际属性未知的航班，同方向区域将保守地把它们作为阻断项。"
+  ],
+  "limitations": [
+    "只报告输入中已知相邻航班之间的间隔，不保证源数据完整。",
+    "输入应包含所选日及相邻计划日，不要使用LIMIT或列表搜索过滤后的子集。",
+    "fcategory的0／1为当前LUM样本映射，正式枚举字典待确认。",
+    "尚未扣除保障、准备或预冷时间，结果不是可停机时段或设备控制指令。"
+  ],
+  "areas": {
+    "all": {
+      "label": "全场合并",
+      "selected_day_flights": 6,
+      "gap_count": 7,
+      "gaps": [
+        {
+          "start": "2026-11-05T14:00:00+08:00",
+          "end": "2026-11-06T07:00:00+08:00",
+          "duration_minutes": 1020.0,
+          "before": [
+            {
+              "flight_number": "DEMO_INT_B",
+              "direction": "O",
+              "region": "international",
+              "plan_date": "2026-11-05",
+              "route": "芒市 → 示例外站"
+            }
+          ],
+          "after": [
+            {
+              "flight_number": "DEMO_NEXT",
+              "direction": "I",
+              "region": "domestic",
+              "plan_date": "2026-11-06",
+              "route": "示例外站 → 芒市"
+            }
+          ]
+        },
+        {
+          "start": "2026-11-05T12:00:00+08:00",
+          "end": "2026-11-05T14:00:00+08:00",
+          "duration_minutes": 120.0,
+          "before": [
+            {
+              "flight_number": "DEMO_IN_B",
+              "direction": "I",
+              "region": "domestic",
+              "plan_date": "2026-11-05",
+              "route": "示例外站 → 芒市"
+            }
+          ],
+          "after": [
+            {
+              "flight_number": "DEMO_INT_B",
+              "direction": "O",
+              "region": "international",
+              "plan_date": "2026-11-05",
+              "route": "芒市 → 示例外站"
+            }
+          ]
+        },
+        {
+          "start": "2026-11-05T07:30:00+08:00",
+          "end": "2026-11-05T09:00:00+08:00",
+          "duration_minutes": 90.0,
+          "before": [
+            {
+              "flight_number": "DEMO_PREV",
+              "direction": "I",
+              "region": "domestic",
+              "plan_date": "2026-11-04",
+              "route": "示例外站 → 芒市"
+            }
+          ],
+          "after": [
+            {
+              "flight_number": "DEMO_IN_A",
+              "direction": "I",
+              "region": "domestic",
+              "plan_date": "2026-11-05",
+              "route": "示例外站 → 芒市"
+            }
+          ]
+        },
+        {
+          "start": "2026-11-05T10:30:00+08:00",
+          "end": "2026-11-05T12:00:00+08:00",
+          "duration_minutes": 90.0,
+          "before": [
+            {
+              "flight_number": "DEMO_UNKNOWN",
+              "direction": "I",
+              "region": "unknown",
+              "plan_date": "2026-11-05",
+              "route": "示例外站 → 芒市"
+            }
+          ],
+          "after": [
+            {
+              "flight_number": "DEMO_IN_B",
+              "direction": "I",
+              "region": "domestic",
+              "plan_date": "2026-11-05",
+              "route": "示例外站 → 芒市"
+            }
+          ]
+        },
+        {
+          "start": "2026-11-05T09:00:00+08:00",
+          "end": "2026-11-05T09:30:00+08:00",
+          "duration_minutes": 30.0,
+          "before": [
+            {
+              "flight_number": "DEMO_IN_A",
+              "direction": "I",
+              "region": "domestic",
+              "plan_date": "2026-11-05",
+              "route": "示例外站 → 芒市"
+            }
+          ],
+          "after": [
+            {
+              "flight_number": "DEMO_OUT_A",
+              "direction": "O",
+              "region": "domestic",
+              "plan_date": "2026-11-05",
+              "route": "芒市 → 示例外站"
+            }
+          ]
+        },
+        {
+          "start": "2026-11-05T09:30:00+08:00",
+          "end": "2026-11-05T10:00:00+08:00",
+          "duration_minutes": 30.0,
+          "before": [
+            {
+              "flight_number": "DEMO_OUT_A",
+              "direction": "O",
+              "region": "domestic",
+              "plan_date": "2026-11-05",
+              "route": "芒市 → 示例外站"
+            }
+          ],
+          "after": [
+            {
+              "flight_number": "DEMO_INT_A",
+              "direction": "I",
+              "region": "international",
+              "plan_date": "2026-11-05",
+              "route": "示例外站 → 芒市"
+            }
+          ]
+        },
+        {
+          "start": "2026-11-05T10:00:00+08:00",
+          "end": "2026-11-05T10:30:00+08:00",
+          "duration_minutes": 30.0,
+          "before": [
+            {
+              "flight_number": "DEMO_INT_A",
+              "direction": "I",
+              "region": "international",
+              "plan_date": "2026-11-05",
+              "route": "示例外站 → 芒市"
+            }
+          ],
+          "after": [
+            {
+              "flight_number": "DEMO_UNKNOWN",
+              "direction": "I",
+              "region": "unknown",
+              "plan_date": "2026-11-05",
+              "route": "示例外站 → 芒市"
+            }
+          ]
+        }
+      ]
+    },
+    "domestic:I": {
+      "label": "国内进港",
+      "selected_day_flights": 2,
+      "gap_count": 4,
+      "gaps": [
+        {
+          "start": "2026-11-05T12:00:00+08:00",
+          "end": "2026-11-06T07:00:00+08:00",
+          "duration_minutes": 1140.0,
+          "before": [
+            {
+              "flight_number": "DEMO_IN_B",
+              "direction": "I",
+              "region": "domestic",
+              "plan_date": "2026-11-05",
+              "route": "示例外站 → 芒市"
+            }
+          ],
+          "after": [
+            {
+              "flight_number": "DEMO_NEXT",
+              "direction": "I",
+              "region": "domestic",
+              "plan_date": "2026-11-06",
+              "route": "示例外站 → 芒市"
+            }
+          ]
+        },
+        {
+          "start": "2026-11-05T07:30:00+08:00",
+          "end": "2026-11-05T09:00:00+08:00",
+          "duration_minutes": 90.0,
+          "before": [
+            {
+              "flight_number": "DEMO_PREV",
+              "direction": "I",
+              "region": "domestic",
+              "plan_date": "2026-11-04",
+              "route": "示例外站 → 芒市"
+            }
+          ],
+          "after": [
+            {
+              "flight_number": "DEMO_IN_A",
+              "direction": "I",
+              "region": "domestic",
+              "plan_date": "2026-11-05",
+              "route": "示例外站 → 芒市"
+            }
+          ]
+        },
+        {
+          "start": "2026-11-05T09:00:00+08:00",
+          "end": "2026-11-05T10:30:00+08:00",
+          "duration_minutes": 90.0,
+          "before": [
+            {
+              "flight_number": "DEMO_IN_A",
+              "direction": "I",
+              "region": "domestic",
+              "plan_date": "2026-11-05",
+              "route": "示例外站 → 芒市"
+            }
+          ],
+          "after": [
+            {
+              "flight_number": "DEMO_UNKNOWN",
+              "direction": "I",
+              "region": "unknown",
+              "plan_date": "2026-11-05",
+              "route": "示例外站 → 芒市"
+            }
+          ]
+        },
+        {
+          "start": "2026-11-05T10:30:00+08:00",
+          "end": "2026-11-05T12:00:00+08:00",
+          "duration_minutes": 90.0,
+          "before": [
+            {
+              "flight_number": "DEMO_UNKNOWN",
+              "direction": "I",
+              "region": "unknown",
+              "plan_date": "2026-11-05",
+              "route": "示例外站 → 芒市"
+            }
+          ],
+          "after": [
+            {
+              "flight_number": "DEMO_IN_B",
+              "direction": "I",
+              "region": "domestic",
+              "plan_date": "2026-11-05",
+              "route": "示例外站 → 芒市"
+            }
+          ]
+        }
+      ]
+    },
+    "domestic:O": {
+      "label": "国内出港",
+      "selected_day_flights": 1,
+      "gap_count": 0,
+      "gaps": []
+    },
+    "international:I": {
+      "label": "国际进港",
+      "selected_day_flights": 1,
+      "gap_count": 1,
+      "gaps": [
+        {
+          "start": "2026-11-05T10:00:00+08:00",
+          "end": "2026-11-05T10:30:00+08:00",
+          "duration_minutes": 30.0,
+          "before": [
+            {
+              "flight_number": "DEMO_INT_A",
+              "direction": "I",
+              "region": "international",
+              "plan_date": "2026-11-05",
+              "route": "示例外站 → 芒市"
+            }
+          ],
+          "after": [
+            {
+              "flight_number": "DEMO_UNKNOWN",
+              "direction": "I",
+              "region": "unknown",
+              "plan_date": "2026-11-05",
+              "route": "示例外站 → 芒市"
+            }
+          ]
+        }
+      ]
+    },
+    "international:O": {
+      "label": "国际出港",
+      "selected_day_flights": 1,
+      "gap_count": 0,
+      "gaps": []
+    }
+  }
+}

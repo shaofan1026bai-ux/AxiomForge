@@ -1,6 +1,31 @@
 # AxiomForge
 A personal AI-powered workbench for building rules, training models, and orchestrating algorithms.
 
+## 项目层级
+
+```text
+AxiomForge/
+├── src/axiomforge/             # NiceGUI 工作台与只读分析模块
+│   └── ui/                     # 工作台页面、交互和图表
+├── services/
+│   └── hangxin-airport/        # 航信机场独立服务
+│       ├── task-manager/       # FastAPI 后端、设备策略与日负荷预测
+│       │   ├── algorithms/     # 算法实现
+│       │   ├── scripts/        # 策略调度入口
+│       │   └── deploy/         # systemd 服务定义与环境模板
+│       └── energy-dashboard/   # 能耗看板后端与每日数据同步
+│           ├── server/         # Node.js 接口
+│           └── scripts/        # Python 同步与导入脚本
+├── tests/                      # 工作台测试
+├── docs/
+│   ├── architecture/           # 工作台架构与页面设计
+│   ├── interfaces/             # 项目资料与外部接口契约
+│   └── operations/             # 工作台部署和运维
+└── .trellis/                   # 开发规范与任务记录
+```
+
+航信机场两套服务独立于工作台运行，并在各自目录维护依赖、配置和验证说明。 [航信机场服务索引](services/hangxin-airport/README.md)
+
 ## Run Locally
 
 Requires Python 3.12+ and [uv](https://docs.astral.sh/uv/).
@@ -32,7 +57,7 @@ The service listens only on loopback. Stop it with Ctrl+C. 首次打开显示项
 
 The first NiceGUI style prototype implements the selected Research Canvas layout, light/dark/system themes, three project contexts, module navigation and an interactive synthetic power/temperature analysis. Date/device filters, parameter adjustments, analysis records, source inspection and CSV export work locally.
 
-航信项目的“功率与温度分析”接入小麦真实测点，支持手动时间查询、摘要、双轴趋势、相关性散点、分析选区、数据明细和CSV导出。功率与温度专题仅在航信项目显示；华师大和大润发的数据分析暂为待接入状态。“今日航班”专栏支持 SurrealDB 只读查询、进出港双栏、搜索和分页、计划／动态时刻及长间隔时间带。模型训练、设备控制和定时任务尚未实现；算法修改仍通过 Codex 完成。
+航信项目的“功率与温度分析”接入小麦真实测点，支持手动时间查询、摘要、双轴趋势、相关性散点、分析选区、数据明细和CSV导出。功率与温度专题仅在航信项目显示；华师大和大润发的数据分析暂为待接入状态。“今日航班”专栏支持 SurrealDB 只读查询、进出港双栏、搜索和分页、计划／动态时刻及长间隔时间带。工作台的算法修改仍通过 Codex 完成，模型训练属于后续规划。
 
 小麦数据源通过独立外部配置启用，配置不提交到仓库：
 

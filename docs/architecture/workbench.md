@@ -1,6 +1,8 @@
 # Workbench Architecture
 
-Status: architecture proposal with the first NiceGUI style prototype implemented, 2026-11-04. 航信航班只读查询已接入；持久化执行、训练、设备控制和调度仍待实现。See [screen design](workbench-ui.md) and [planning task](../../.trellis/tasks/11-04-nicegui-workbench-design/prd.md).
+Status: architecture proposal with the first NiceGUI style prototype implemented, 2026-11-04. 航信航班只读查询已接入，工作台内的持久化执行、训练、设备控制和调度仍属规划。See [screen design](workbench-ui.md) and [planning task](../../.trellis/tasks/11-04-nicegui-workbench-design/prd.md).
+
+航信机场线上任务管理和能耗看板作为独立服务运行。 [航信机场服务索引](../../services/hangxin-airport/README.md)
 
 ## Product Boundary
 

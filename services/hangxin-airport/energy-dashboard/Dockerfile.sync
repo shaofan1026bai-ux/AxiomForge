@@ -1,0 +1,14 @@
+FROM python:3.12-slim-bookworm
+WORKDIR /app
+RUN --mount=type=bind,from=wheels,target=/wheels \
+    set -eu; \
+    set -- httpx==0.28.1 truststore==0.10.5 cryptography==50.0.2 python-dotenv==1.2.3; \
+    if [ -n "$(find /wheels -maxdepth 1 -name '*.whl' -print -quit)" ]; then \
+      pip install --no-cache-dir --no-index --find-links=/wheels "$@"; \
+    else \
+      pip install --no-cache-dir "$@"; \
+    fi
+COPY --from=axiomforge /energy_share.py /energy_share_source.py /ahu_temperature.py /power_temperature.py /region_climate.py /region_climate_source.py /xiaomai_client.py ./axiomforge/
+COPY scripts/import_energy.py scripts/import_region_temperature.py scripts/sync_outdoor_temperature.py scripts/sync_daily.py ./scripts/
+ENV PYTHONPATH=/app PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1
+ENTRYPOINT ["python", "scripts/sync_daily.py"]
